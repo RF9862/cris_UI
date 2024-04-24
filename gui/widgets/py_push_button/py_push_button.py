@@ -28,6 +28,9 @@ QPushButton {{
     color: {_color};
 	border-radius: {_radius};	
 	background-color: {_bg_color};
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                      stop:0 #cd18ee, stop: 0.5 #cd18ee,
+                                      stop: 0.8 #1886ee, stop:1 #1886ee);
 }}
 QPushButton:hover {{
 	background-color: {_bg_color_hover};

@@ -189,14 +189,16 @@ class SetupMainWindow:
         themes = Themes()
         self.themes = themes.items
 
+        
+        
         ############# YOLO 5 BUTTON ##########
         self.btn_yolo5 = PyPushButton(
             text="YOLO 5",
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            radius=10,
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
-            bg_color_pressed=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"]
         )
 
         self.ui.load_pages.btn_layout_1.addWidget(self.btn_yolo5)
@@ -206,7 +208,7 @@ class SetupMainWindow:
         self.btn_yolo8 = PyPushButton(
             text="YOLO 8",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -219,7 +221,7 @@ class SetupMainWindow:
         self.btn_load_images = PyPushButton(
             text="Load images",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -230,7 +232,7 @@ class SetupMainWindow:
         self.btn_start_training = PyPushButton(
             text="Start training",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -241,7 +243,7 @@ class SetupMainWindow:
         self.btn_save_model = PyPushButton(
             text="Save/Name model",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -252,7 +254,7 @@ class SetupMainWindow:
         self.btn_test_model= PyPushButton(
             text="Test model",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -264,7 +266,7 @@ class SetupMainWindow:
         self.btn_camera_A= PyPushButton(
             text="Camera A",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -275,7 +277,7 @@ class SetupMainWindow:
         self.btn_Drone_A= PyPushButton(
             text="Drone A",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -289,7 +291,7 @@ class SetupMainWindow:
         self.btn_back= PyPushButton(
             text="Back",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
@@ -300,7 +302,7 @@ class SetupMainWindow:
         self.btn_next = PyPushButton(
             text="Next",
             radius=8,
-            color=self.themes["app_color"]["text_foreground"],
+            color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
