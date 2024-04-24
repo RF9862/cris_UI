@@ -22,15 +22,15 @@ class PyCircularProgress(QWidget):
     def __init__(
         self,
         value = 0,
-        progress_width = 10,
+        progress_width = 15,
         is_rounded = True,
         max_value = 100,
         progress_color = "#ff79c6",
         enable_text = True,
         font_family = "Segoe UI",
-        font_size = 12,
+        font_size = 24,
         suffix = "%",
-        text_color = "#ff79c6",
+        text_color = "#f5f6f9",
         enable_bg = True,
         bg_color = "#44475a"
     ):
@@ -71,7 +71,7 @@ class PyCircularProgress(QWidget):
     # PAINT EVENT (DESIGN YOUR CIRCULAR PROGRESS HERE)
     def paintEvent(self, e):
         # SET PROGRESS PARAMETERS
-        width = self.width() - self.progress_width
+        width = self.height() - self.progress_width
         height = self.height() - self.progress_width
         margin = self.progress_width / 2
         value =  self.value * 360 / self.max_value
@@ -83,7 +83,7 @@ class PyCircularProgress(QWidget):
         paint.setFont(QFont(self.font_family, self.font_size))
 
         # CREATE RECTANGLE
-        rect = QRect(0, 0, self.width(), self.height())
+        rect = QRect(0, 0, self.width()/1.5, self.height())
         paint.setPen(Qt.NoPen)
 
         # PEN
@@ -102,6 +102,7 @@ class PyCircularProgress(QWidget):
         # CREATE ARC / CIRCULAR PROGRESS
         pen.setColor(QColor(self.progress_color))
         paint.setPen(pen)      
+
         paint.drawArc(margin, margin, width, height, -90 * 16, -value * 16)       
 
         # CREATE TEXT

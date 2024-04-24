@@ -284,9 +284,37 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_3.addWidget(self.btn_Drone_A)
 
 
+        ###########################
+
+        self.btn_back= PyPushButton(
+            text="Back",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+
+        self.ui.load_pages.btn_layout_4.addWidget(self.btn_back)
+
+        self.btn_next = PyPushButton(
+            text="Next",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+
+        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
+
+
+        #############################
+
+
         #################################################
         self.circular_bar = PyCircularProgress(
-            value=10, is_rounded=False
+            value=40, is_rounded=False
         )
         self.ui.load_pages.circular_layout.addWidget(self.circular_bar)
         

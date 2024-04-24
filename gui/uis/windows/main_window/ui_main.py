@@ -303,3 +303,10 @@ class UI_MainWindow(object):
         # ADD CENTRAL WIDGET AND SET CONTENT MARGINS
         # ///////////////////////////////////////////////////////////////
         parent.setCentralWidget(self.central_widget)
+
+
+        
+
+
+
+        

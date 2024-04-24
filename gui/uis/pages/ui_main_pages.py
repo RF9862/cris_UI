@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesKkIsfL.ui'
+## Form generated from reading UI file 'main_pageszkFTYy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.0
 ##
@@ -50,18 +50,27 @@ class Ui_MainPages(object):
         self.frame_2.setLineWidth(0)
         self.frame_options = QFrame(self.frame_2)
         self.frame_options.setObjectName(u"frame_options")
-        self.frame_options.setGeometry(QRect(60, 190, 521, 251))
+        self.frame_options.setGeometry(QRect(60, 160, 521, 301))
         self.frame_options.setFrameShape(QFrame.NoFrame)
         self.frame_options.setFrameShadow(QFrame.Raised)
         self.label_3 = QLabel(self.frame_options)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(90, 10, 311, 41))
+        self.label_3.setGeometry(QRect(100, 0, 311, 41))
         self.verticalLayoutWidget = QWidget(self.frame_options)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(140, 110, 160, 80))
+        self.verticalLayoutWidget.setGeometry(QRect(90, 50, 251, 161))
         self.circular_layout = QVBoxLayout(self.verticalLayoutWidget)
         self.circular_layout.setObjectName(u"circular_layout")
         self.circular_layout.setContentsMargins(0, 0, 0, 0)
+        self.label_8 = QLabel(self.frame_options)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setGeometry(QRect(90, 210, 311, 41))
+        self.horizontalLayoutWidget = QWidget(self.frame_options)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(60, 259, 321, 31))
+        self.btn_layout_4 = QHBoxLayout(self.horizontalLayoutWidget)
+        self.btn_layout_4.setObjectName(u"btn_layout_4")
+        self.btn_layout_4.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(30, 40, 121, 20))
@@ -149,6 +158,7 @@ class Ui_MainPages(object):
     def retranslateUi(self, MainPages):
         MainPages.setWindowTitle(QCoreApplication.translate("MainPages", u"Form", None))
         self.label_3.setText(QCoreApplication.translate("MainPages", u"250 images are required", None))
+        self.label_8.setText(QCoreApplication.translate("MainPages", u"Drag and Drop or Select images", None))
         self.label.setText(QCoreApplication.translate("MainPages", u"Select Model", None))
         self.label_2.setText(QCoreApplication.translate("MainPages", u"Select stream", None))
         self.label_4.setText(QCoreApplication.translate("MainPages", u"Stream Name A", None))
