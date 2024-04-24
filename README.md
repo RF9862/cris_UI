@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PyOneDark Qt Widgets Modern GUI - With PySide6
 
 ![PyOneDark - Capa](https://user-images.githubusercontent.com/60605512/127739671-653eccb8-49da-4244-ae48-a8ae9b9b6fb2.png)
@@ -23,3 +24,6 @@ Presentation and tutorial video with the main functions of the user interface.
 > Tutorial 03: https://youtu.be/eUT4J9Ukg8g
 
 > Simple Text Editor - https://youtu.be/v7nh_bSumNQ
+=======
+# cris_UI
+>>>>>>> e5a570b181f9c74b0ad448f3b390727c61b8fb47
