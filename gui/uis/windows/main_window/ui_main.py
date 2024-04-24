@@ -254,7 +254,7 @@ class UI_MainWindow(object):
         ''')
 
         # ADD BG
-        self.content_area_right_layout.addWidget(self.content_area_right_bg_frame)
+        #self.content_area_right_bg_frame.btn_layout_1.addWidget(self.content_area_right_bg_frame)
 
         # ADD RIGHT PAGES TO RIGHT COLUMN
         self.right_column = Ui_RightColumn()

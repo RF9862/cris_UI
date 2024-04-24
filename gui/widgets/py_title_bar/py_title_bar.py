@@ -155,7 +155,6 @@ class PyTitleBar(QWidget):
 
         # Extra BTNs layout
         self.bg_layout.addLayout(self.custom_buttons_layout)
-
         # ADD Buttons
         if is_custom_title_bar:            
             self.bg_layout.addWidget(self.minimize_button)
