@@ -71,4 +71,3 @@ class PyPushButton(QPushButton):
         )
         self.setStyleSheet(custom_style)
 
-        

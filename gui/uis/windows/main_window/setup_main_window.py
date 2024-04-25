@@ -36,6 +36,7 @@ from gui.core.json_themes import Themes
 # IMPORT PY ONE DARK WIDGETS
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
+from gui.widgets.py_push_button.py_toggle_button import ToggleButton
 
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////
@@ -192,7 +193,7 @@ class SetupMainWindow:
         
         
         ############# YOLO 5 BUTTON ##########
-        self.btn_yolo5 = PyPushButton(
+        self.btn_yolo5 = ToggleButton(
             text="YOLO 5",
             radius=10,
             color=self.themes["app_color"]["text_title"],
@@ -205,7 +206,7 @@ class SetupMainWindow:
 
         
         ############# YOLO 8 BUTTON ##########
-        self.btn_yolo8 = PyPushButton(
+        self.btn_yolo8 = ToggleButton(
             text="YOLO 8",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -218,7 +219,7 @@ class SetupMainWindow:
 
 
         ############# SECOND PANEL BUTTONS ##########
-        self.btn_load_images = PyPushButton(
+        self.btn_load_images = ToggleButton(
             text="Load images",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -229,7 +230,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_load_images)
 
-        self.btn_start_training = PyPushButton(
+        self.btn_start_training = ToggleButton(
             text="Start training",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -240,7 +241,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_start_training)
 
-        self.btn_save_model = PyPushButton(
+        self.btn_save_model = ToggleButton(
             text="Save/Name model",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -251,7 +252,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_save_model)
 
-        self.btn_test_model= PyPushButton(
+        self.btn_test_model= ToggleButton(
             text="Test model",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -263,7 +264,7 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_test_model)
 
         ############ Camera buttons ##############
-        self.btn_camera_A= PyPushButton(
+        self.btn_camera_A= ToggleButton(
             text="Camera A",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -274,7 +275,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_3.addWidget(self.btn_camera_A)
 
-        self.btn_Drone_A= PyPushButton(
+        self.btn_Drone_A= ToggleButton(
             text="Drone A",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -283,12 +284,13 @@ class SetupMainWindow:
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
 
+
         self.ui.load_pages.btn_layout_3.addWidget(self.btn_Drone_A)
 
 
         ###########################
 
-        self.btn_back= PyPushButton(
+        self.btn_back= ToggleButton(
             text="Back",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -299,7 +301,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_back)
 
-        self.btn_next = PyPushButton(
+        self.btn_next = ToggleButton(
             text="Next",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -308,7 +310,9 @@ class SetupMainWindow:
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
 
+
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
+
 
 
         #############################

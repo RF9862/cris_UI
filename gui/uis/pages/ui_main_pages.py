@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesBacGDb.ui'
+## Form generated from reading UI file 'main_pagesTKhgCV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.0
 ##
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QButtonGroup, QFrame, QGraphicsView,
-    QGroupBox, QHBoxLayout, QLabel, QLayout,
-    QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGraphicsView, QGroupBox,
+    QHBoxLayout, QLabel, QLayout, QSizePolicy,
+    QStackedWidget, QVBoxLayout, QWidget)
 
 class Ui_MainPages(object):
     def setupUi(self, MainPages):
@@ -67,15 +67,10 @@ class Ui_MainPages(object):
         self.label_8.setGeometry(QRect(90, 210, 311, 41))
         self.horizontalLayoutWidget = QWidget(self.frame_options)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(60, 259, 321, 31))
+        self.horizontalLayoutWidget.setGeometry(QRect(80, 240, 321, 49))
         self.btn_layout_4 = QHBoxLayout(self.horizontalLayoutWidget)
         self.btn_layout_4.setObjectName(u"btn_layout_4")
         self.btn_layout_4.setContentsMargins(0, 0, 0, 0)
-        self.groupBox_3 = QGroupBox(self.frame_options)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(-40, 0, 581, 301))
-        self.groupBox_3.setStyleSheet(u" background: rgb(2,0,36);\n"
-"background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(119,9,121,0.371381829098827) 39%, rgba(0,212,255,1) 100%); ")
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(30, 40, 121, 20))
@@ -92,23 +87,23 @@ class Ui_MainPages(object):
         self.groupBox_2 = QGroupBox(self.frame_2)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.groupBox_2.setGeometry(QRect(0, 99, 621, 51))
-        self.widget = QWidget(self.frame_2)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(190, 30, 372, 49))
-        self.btn_layout_1 = QHBoxLayout(self.widget)
+        self.layoutWidget = QWidget(self.frame_2)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(190, 30, 372, 49))
+        self.btn_layout_1 = QHBoxLayout(self.layoutWidget)
         self.btn_layout_1.setObjectName(u"btn_layout_1")
         self.btn_layout_1.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.btn_layout_1.setContentsMargins(1, 1, 1, 1)
-        self.widget1 = QWidget(self.frame_2)
-        self.widget1.setObjectName(u"widget1")
-        self.widget1.setGeometry(QRect(160, 460, 363, 30))
-        self.btn_layout_3 = QHBoxLayout(self.widget1)
+        self.layoutWidget1 = QWidget(self.frame_2)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(150, 470, 363, 30))
+        self.btn_layout_3 = QHBoxLayout(self.layoutWidget1)
         self.btn_layout_3.setObjectName(u"btn_layout_3")
         self.btn_layout_3.setContentsMargins(0, 0, 0, 0)
-        self.widget2 = QWidget(self.frame_2)
-        self.widget2.setObjectName(u"widget2")
-        self.widget2.setGeometry(QRect(10, 110, 596, 30))
-        self.btn_layout_2 = QHBoxLayout(self.widget2)
+        self.layoutWidget2 = QWidget(self.frame_2)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(10, 110, 596, 30))
+        self.btn_layout_2 = QHBoxLayout(self.layoutWidget2)
         self.btn_layout_2.setObjectName(u"btn_layout_2")
         self.btn_layout_2.setContentsMargins(0, 0, 0, 0)
         self.graphicsView1 = QGraphicsView(self.frame)
@@ -174,7 +169,6 @@ class Ui_MainPages(object):
         MainPages.setWindowTitle(QCoreApplication.translate("MainPages", u"Form", None))
         self.label_3.setText(QCoreApplication.translate("MainPages", u"250 images are required", None))
         self.label_8.setText(QCoreApplication.translate("MainPages", u"Drag and Drop or Select images", None))
-        self.groupBox_3.setTitle("")
         self.label.setText(QCoreApplication.translate("MainPages", u"Select Model", None))
         self.label_2.setText(QCoreApplication.translate("MainPages", u"Select stream", None))
         self.groupBox.setTitle("")
