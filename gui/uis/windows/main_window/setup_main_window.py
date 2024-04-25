@@ -403,36 +403,42 @@ class SetupMainWindow:
 
         # /////////////////////////// BUTTON FUNCTIONS //////////
 
+        def clear_frame():
+            self.ui.load_pages.frame_load_images.setEnabled(False)
+            self.ui.load_pages.frame_load_images.setVisible(False)
+
+            self.ui.load_pages.frame_train_model.setEnabled(False)
+            self.ui.load_pages.frame_train_model.setVisible(False)
+
+            self.ui.load_pages.frame_save_model.setEnabled(False)
+            self.ui.load_pages.frame_save_model.setVisible(False)
+
+
+
         def set_load_images_page():
+            clear_frame()
             if self.btn_load_images.isChecked():
                 self.ui.load_pages.frame_load_images.setEnabled(True)
                 self.ui.load_pages.frame_load_images.setVisible(True)
-            else :
-                self.ui.load_pages.frame_load_images.setEnabled(False)
-                self.ui.load_pages.frame_load_images.setVisible(False)
 
         self.btn_load_images.clicked.connect(set_load_images_page)
 
 
         def set_train_model_page():
+            clear_frame()
             if self.btn_start_training.isChecked():
                 self.ui.load_pages.frame_train_model.setEnabled(True)
                 self.ui.load_pages.frame_train_model.setVisible(True)
-            else :
-                self.ui.load_pages.frame_train_model.setEnabled(False)
-                self.ui.load_pages.frame_train_model.setVisible(False)
 
         self.btn_start_training.clicked.connect(set_train_model_page)
 
 
         def set_save_model_page():
+            clear_frame()
             if self.btn_save_model.isChecked():
                 self.ui.load_pages.frame_save_model.setEnabled(True)
                 self.ui.load_pages.frame_save_model.setVisible(True)
-            else :
-                self.ui.load_pages.frame_save_model.setEnabled(False)
-                self.ui.load_pages.frame_save_model.setVisible(False)
-
+                
         self.btn_save_model.clicked.connect(set_save_model_page)
 
         ######################################
