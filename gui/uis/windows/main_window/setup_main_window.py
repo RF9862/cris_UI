@@ -308,17 +308,26 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_back)
 
-        """self.btn_next = PyPushButton(
-            text="Next",
+        ##############################################
+        self.circular_bar_load_img = PyCircularProgress(
+            value=40, is_rounded=False
+        )
+        self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
+        ##################################################
+
+        
+        self.btn_next = UploadButton(
+            text="Upload",
             radius=8,
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
+            circular_progress_bar=self.circular_bar_load_img
         )
 
+        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
-        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)"""
 
 
         ##################################################################
@@ -380,10 +389,7 @@ class SetupMainWindow:
 
 
         #################################################
-        self.circular_bar_load_img = PyCircularProgress(
-            value=40, is_rounded=False
-        )
-        self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
+        
 
         ##################################################
 
@@ -438,17 +444,10 @@ class SetupMainWindow:
             if self.btn_save_model.isChecked():
                 self.ui.load_pages.frame_save_model.setEnabled(True)
                 self.ui.load_pages.frame_save_model.setVisible(True)
-                
+
         self.btn_save_model.clicked.connect(set_save_model_page)
 
         ######################################
-
-        
-
-        self.btn_next = UploadButton(self.circular_bar_load_img)
-
-
-        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
 
 
