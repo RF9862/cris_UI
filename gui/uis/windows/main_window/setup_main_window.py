@@ -37,6 +37,7 @@ from gui.core.json_themes import Themes
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
 from gui.widgets.py_push_button.py_toggle_button import ToggleButton
+from gui.widgets.py_push_button.py_upload_button import UploadButton
 
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////
@@ -296,7 +297,7 @@ class SetupMainWindow:
 
         ###########################
 
-        self.btn_back= ToggleButton(
+        self.btn_back= PyPushButton(
             text="Back",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -307,7 +308,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_back)
 
-        self.btn_next = ToggleButton(
+        """self.btn_next = PyPushButton(
             text="Next",
             radius=8,
             color=self.themes["app_color"]["text_title"],
@@ -317,7 +318,7 @@ class SetupMainWindow:
         )
 
 
-        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
+        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)"""
 
 
         ##################################################################
@@ -400,7 +401,52 @@ class SetupMainWindow:
         self.ui.load_pages.circular_layout_4.addWidget(self.circular_bar_save_model)
 
 
+        # /////////////////////////// BUTTON FUNCTIONS //////////
+
+        def set_load_images_page():
+            if self.btn_load_images.isChecked():
+                self.ui.load_pages.frame_load_images.setEnabled(True)
+                self.ui.load_pages.frame_load_images.setVisible(True)
+            else :
+                self.ui.load_pages.frame_load_images.setEnabled(False)
+                self.ui.load_pages.frame_load_images.setVisible(False)
+
+        self.btn_load_images.clicked.connect(set_load_images_page)
+
+
+        def set_train_model_page():
+            if self.btn_start_training.isChecked():
+                self.ui.load_pages.frame_train_model.setEnabled(True)
+                self.ui.load_pages.frame_train_model.setVisible(True)
+            else :
+                self.ui.load_pages.frame_train_model.setEnabled(False)
+                self.ui.load_pages.frame_train_model.setVisible(False)
+
+        self.btn_start_training.clicked.connect(set_train_model_page)
+
+
+        def set_save_model_page():
+            if self.btn_save_model.isChecked():
+                self.ui.load_pages.frame_save_model.setEnabled(True)
+                self.ui.load_pages.frame_save_model.setVisible(True)
+            else :
+                self.ui.load_pages.frame_save_model.setEnabled(False)
+                self.ui.load_pages.frame_save_model.setVisible(False)
+
+        self.btn_save_model.clicked.connect(set_save_model_page)
+
+        ######################################
+
         
+
+        self.btn_next = UploadButton(self.circular_bar_load_img)
+
+
+        self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
+
+
+
+        # ////////////////////////////////////////////////////
         
         # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS

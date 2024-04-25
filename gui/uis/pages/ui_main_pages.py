@@ -8,16 +8,8 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGraphicsView, QGroupBox,
-    QHBoxLayout, QLabel, QLayout, QSizePolicy,
-    QStackedWidget, QVBoxLayout, QWidget)
+from qt_core import *
+
 
 class Ui_MainPages(object):
     def setupUi(self, MainPages):
@@ -118,8 +110,8 @@ class Ui_MainPages(object):
         self.frame_train_model.setFrameShadow(QFrame.Raised)
 
 
-        self.frame_train_model.setEnabled(True)
-        self.frame_train_model.setVisible(True)
+        self.frame_train_model.setEnabled(False)
+        self.frame_train_model.setVisible(False)
 
 
 
