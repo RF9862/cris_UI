@@ -203,6 +203,12 @@ class SetupMainWindow:
         )
 
         self.ui.load_pages.btn_layout_1.addWidget(self.btn_yolo5)
+        
+        """def print_check():
+            if self.btn_yolo5.isChecked():
+                print("Checked ....")
+        self.btn_yolo5.clicked.connect(print_check)"""
+        
 
         
         ############# YOLO 8 BUTTON ##########
@@ -314,15 +320,86 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
 
+        ##################################################################
+
+        self.btn_back_train = ToggleButton(
+            text="Back",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+
+
+        self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
+
+
+        self.btn_train = ToggleButton(
+            text="Train",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+
+
+        self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
+
+
+
+
+
+        ##################################################################
+
+        self.btn_save = ToggleButton(
+            text="Save",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+
+
+        self.ui.load_pages.btn_layout_8.addWidget(self.btn_save)
+
+
+        ##################################################################
+
+
+
+
+
+
+        ##################################################################
 
         #############################
 
 
         #################################################
-        self.circular_bar = PyCircularProgress(
+        self.circular_bar_load_img = PyCircularProgress(
             value=40, is_rounded=False
         )
-        self.ui.load_pages.circular_layout.addWidget(self.circular_bar)
+        self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
+
+        ##################################################
+
+        self.circular_bar_train_model= PyCircularProgress(
+            value=40, is_rounded=False
+        )
+        self.ui.load_pages.circular_layout_3.addWidget(self.circular_bar_train_model)
+
+        ##################################################
+
+        self.circular_bar_save_model= PyCircularProgress(
+            value=100, is_rounded=False, custom_text="SUCCESS",
+            font_size=20, progress_color="#00ff7f"
+        )
+        self.ui.load_pages.circular_layout_4.addWidget(self.circular_bar_save_model)
+
+
         
         
         # ///////////////////////////////////////////////////////////////

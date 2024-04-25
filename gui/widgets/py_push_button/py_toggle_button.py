@@ -76,7 +76,15 @@ class ToggleButton(QPushButton):
         self.clicked.connect(self.toggle_state)
 
     def toggle_state(self):
+        self.uncheck_other_buttons()
         if not self.isChecked():
             self.setChecked(False)
+            
         else:
             self.setChecked(True)
+
+
+    def uncheck_other_buttons(self):
+        for button in self.parent().findChildren(ToggleButton):
+            if button != self:
+                button.setChecked(False)

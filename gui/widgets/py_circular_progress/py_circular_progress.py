@@ -32,7 +32,8 @@ class PyCircularProgress(QWidget):
         suffix = "%",
         text_color = "#f5f6f9",
         enable_bg = True,
-        bg_color = "#44475a"
+        bg_color = "#44475a",
+        custom_text=None
     ):
         QWidget.__init__(self)
 
@@ -51,6 +52,7 @@ class PyCircularProgress(QWidget):
         # BG
         self.enable_bg = enable_bg
         self.bg_color = bg_color
+        self.custom_text = custom_text
 
     # ADD DROPSHADOW
     def add_shadow(self, enable):
@@ -107,9 +109,14 @@ class PyCircularProgress(QWidget):
 
         # CREATE TEXT
         if self.enable_text:
-            pen.setColor(QColor(self.text_color))
-            paint.setPen(pen)
-            paint.drawText(rect, Qt.AlignCenter, f"{self.value}{self.suffix}")
+            if self.custom_text:
+                pen.setColor(QColor(self.text_color))
+                paint.setPen(pen)
+                paint.drawText(rect, Qt.AlignCenter, f"{self.custom_text}")
+            else:
+                pen.setColor(QColor(self.text_color))
+                paint.setPen(pen)
+                paint.drawText(rect, Qt.AlignCenter, f"{self.value}{self.suffix}")
 
         # END
         paint.end()
