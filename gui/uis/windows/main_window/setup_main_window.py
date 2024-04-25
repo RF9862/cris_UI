@@ -310,7 +310,7 @@ class SetupMainWindow:
 
         ##############################################
         self.circular_bar_load_img = PyCircularProgress(
-            value=40, is_rounded=False
+            value=0, is_rounded=False
         )
         self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
         ##################################################
