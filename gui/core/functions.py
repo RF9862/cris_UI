@@ -19,6 +19,8 @@
 import os
 import shutil
 
+from yolov8.src.yolo_utils import YOLOFunctions
+
 from gui.core.json_settings import Settings
 
 UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
@@ -84,3 +86,16 @@ class Functions:
 
         except Exception as e:
             print(f"Error: {e}")
+
+    
+
+    def start_training():
+        yolo = YOLOFunctions()
+
+        yolo.train()
+
+        
+
+
+
+

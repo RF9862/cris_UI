@@ -1,4 +1,4 @@
 ultralytics
 tqdm
 pyside6==6.3
-
+PyYAML

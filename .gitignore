@@ -4,3 +4,5 @@
 .pyc
 **/test.ipynb
 UPLOAD/
+val/
+**/*.cache

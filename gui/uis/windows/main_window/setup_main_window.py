@@ -357,6 +357,7 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
 
+        self.btn_train.clicked.connect(Functions.start_training)
 
 
 
