@@ -5,6 +5,7 @@
     "year" : 2021,
     "theme_name" : "default",
     "custom_title_bar": true,
+    "upload_dir_name" : "UPLOAD",
     "startup_size": [
         1400,
         720

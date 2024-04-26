@@ -1,31 +1,9 @@
+
+import time, os
 from PySide6.QtWidgets import QPushButton, QFileDialog
 from PySide6.QtCore import QThread, Signal
-import time, os
 
-
-class FileUploader(QThread):
-    progress_changed = Signal(int)
-
-    def __init__(self, files, parent=None):
-        super().__init__(parent)
-        self.files = files
-
-    def run(self):
-        total_size = sum(os.path.getsize(file) for file in self.files)
-        uploaded_size = 0
-
-        for file in self.files:
-            #file_size = os.path.getsize(file)
-            with open(file, 'rb') as f:
-                while True:
-                    chunk = f.read(3000)  # Read a chunk of data
-                    if not chunk:
-                        break
-                    uploaded_size += len(chunk)
-                    progress = uploaded_size * 100 // total_size
-                    self.progress_changed.emit(progress)
-                    time.sleep(0.1)  # Simulate upload delay
-
+from gui.core.functions import Functions
 from qt_core import *
 
 # STYLE
@@ -68,9 +46,7 @@ class UploadButton(QPushButton):
     ):
         super().__init__()
 
-        self.clicked.connect(self.upload_files)
-        self.file_uploader = FileUploader([])
-        self.file_uploader.progress_changed.connect(self.update_progress)
+        self.clicked.connect(self.upload_folder)
 
         self.circular_progress_bar = circular_progress_bar
 
@@ -99,9 +75,21 @@ class UploadButton(QPushButton):
             self.file_uploader.files = files
             self.file_uploader.start()
 
-    def update_progress(self, progress):
-        # Assuming you have a reference to the circular progress bar widget
-        # Replace circular_progress_bar with the variable name of your circular progress bar widget
+
+    def upload_folder(self):
+        options = QFileDialog.Options()
+        src_folder = QFileDialog.getExistingDirectory(self, "Select folder",
+                                                      options=options)
+        
+        if src_folder:
+            print(f"Selected folder : {src_folder}")
+
+            # copy the dir
+            Functions.copy_dir(source_folder=src_folder, progress_bar= self.circular_progress_bar)
+
+
+
+    def update_progress(self, progress): 
         self.circular_progress_bar.set_value(progress)
 
 

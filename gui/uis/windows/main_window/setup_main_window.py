@@ -345,7 +345,7 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
 
 
-        self.btn_train = ToggleButton(
+        self.btn_train = PyPushButton(
             text="Train",
             radius=8,
             color=self.themes["app_color"]["text_title"],
