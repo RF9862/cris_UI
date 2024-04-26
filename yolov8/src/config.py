@@ -12,8 +12,7 @@ UPLOAD_DATA_DIR_NAME = "UPLOAD"
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
 
-TRAIN_DATA = DESTINATION_DIR
-VAL_DATA = os.path.join(os.getcwd(), "val")
+SPLIT_RATIO = 0.8
 
 CUSTOM_YAML_PATH = os.path.join(ROOT_DIR, "yolov8", "data.yaml")
 

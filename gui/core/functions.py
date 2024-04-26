@@ -18,8 +18,11 @@
 # ///////////////////////////////////////////////////////////////
 import os
 import shutil
+from datetime import datetime
+import random
 
 from yolov8.src.yolo_utils import YOLOFunctions
+from yolov8.src.config import SAVE_MODEL_PATH
 
 from gui.core.json_settings import Settings
 
@@ -31,6 +34,8 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 # APP FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 class Functions:
+
+    current_destination_dir = None
 
     # SET SVG ICON
     # ///////////////////////////////////////////////////////////////
@@ -61,10 +66,12 @@ class Functions:
     
 
     def copy_dir(source_folder , progress_bar=None, destination_folder=DESTINATION_DIR):
-        # remove the folder
-        shutil.rmtree(destination_folder)
-        # CREATE THE DIR
-        os.makedirs(DESTINATION_DIR, exist_ok=True)
+        
+        DIR_NAME = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
+        DIR_path = os.path.join(destination_folder, DIR_NAME)
+        os.makedirs(DIR_path, exist_ok=True)
+
+        Functions.current_destination_dir = DIR_path
         try:
             
             file_names = os.listdir(source_folder)
@@ -73,7 +80,7 @@ class Functions:
 
             for i, file_name in enumerate(file_names):
                 src_file = os.path.join(source_folder, file_name)
-                dst_file = os.path.join(destination_folder, file_name)
+                dst_file = os.path.join(Functions.current_destination_dir, file_name)
                 # Copy the entire folder recursively
                 shutil.copyfile(src_file, dst_file)
 
@@ -81,20 +88,22 @@ class Functions:
                     current_progress = (i+1)/total_size * 100
                     progress_bar.set_value(int(current_progress))
 
+
             
-            print(f"Folder '{source_folder}' copied to '{destination_folder}' successfully.")
+
+            
+            print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
 
         except Exception as e:
             print(f"Error: {e}")
 
     
-
     def start_training():
-        yolo = YOLOFunctions()
+        yolo = YOLOFunctions(data_dir=Functions.current_destination_dir)
 
         yolo.train()
 
-        
+
 
 
 
