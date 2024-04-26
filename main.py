@@ -42,6 +42,15 @@ from gui.widgets import *
 os.environ["QT_FONT_DPI"] = "96"
 # IF IS 4K MONITOR ENABLE 'os.environ["QT_SCALE_FACTOR"] = "2"'
 
+
+
+
+UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
+DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
+os.makedirs(DESTINATION_DIR, exist_ok=True)
+
+
+
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
 class MainWindow(QMainWindow):
