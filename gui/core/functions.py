@@ -21,7 +21,8 @@ import shutil
 from datetime import datetime
 import random
 
-from yolov8.src.yolo_utils import YOLOFunctions
+from yolov8.src.yolo_utils import YOLO8Functions
+from yolov5.src.yolo_utils import YOLO5Functions
 from yolov8.src.config import SAVE_MODEL_PATH
 
 from gui.core.json_settings import Settings
@@ -98,11 +99,25 @@ class Functions:
             print(f"Error: {e}")
 
     
-    def start_training():
-        yolo = YOLOFunctions(data_dir=Functions.current_destination_dir)
+    def start_training_yolo8():
+        yolo = YOLO8Functions(data_dir=Functions.current_destination_dir)
 
         yolo.train()
 
+    
+    def start_training_yolo5():
+        yolo = YOLO5Functions(data_dir=Functions.current_destination_dir)
+
+        yolo.train()
+
+
+    def start_training(setup_window):
+        if setup_window.btn_yolo8.isChecked():
+            Functions.start_training_yolo8()
+        if setup_window.btn_yolo5.isChecked():
+            Functions.start_training_yolo5()
+        else:
+            print(f"SELECT AT LEAST ONE OPTION.")
 
 
 

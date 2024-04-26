@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 
 
-class YOLOFunctions:
+class YOLO8Functions:
     def __init__(self, data_dir, 
                  model_path = config.YOLO8_MODEL_PATH,
                  save_model_dir = config.SAVE_MODEL_PATH):
@@ -114,7 +114,7 @@ class YOLOFunctions:
 
 
 if __name__ == "__main__":
-    yolo = YOLOFunctions()
+    yolo = YOLO8Functions()
 
     yolo.train()
 

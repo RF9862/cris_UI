@@ -20,6 +20,7 @@ from gui.widgets.py_table_widget.py_table_widget import PyTableWidget
 from . functions_main_window import *
 import sys
 import os
+from functools import partial
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
@@ -357,7 +358,10 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
 
-        self.btn_train.clicked.connect(Functions.start_training)
+
+        self.btn_train.clicked.connect(
+            partial(Functions.start_training, self)
+            )
 
 
 
