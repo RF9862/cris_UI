@@ -329,7 +329,9 @@ class SetupMainWindow:
 
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
-
+        self.btn_next.clicked.connect(
+            partial(Functions.upload_folder, self)
+            )
 
         ##################################################################
 

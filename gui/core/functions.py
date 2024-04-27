@@ -100,6 +100,13 @@ class Functions:
         except Exception as e:
             print(f"Error: {e}")
 
+
+    def upload_folder(setup_window):
+        Functions.copy_dir(
+            source_folder=setup_window.btn_next.src_folder,
+            progress_bar=setup_window.btn_next.circular_progress_bar
+        )
+
     
     def start_training_yolo8(progress_bar):
         yolo = YOLO8Functions(data_dir=Functions.current_destination_dir)

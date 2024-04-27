@@ -78,14 +78,14 @@ class UploadButton(QPushButton):
 
     def upload_folder(self):
         options = QFileDialog.Options()
-        src_folder = QFileDialog.getExistingDirectory(self, "Select folder",
+        self.src_folder = QFileDialog.getExistingDirectory(self, "Select folder",
                                                       options=options)
         
-        if src_folder:
+        """if src_folder:
             print(f"Selected folder : {src_folder}")
 
             # copy the dir
-            Functions.copy_dir(source_folder=src_folder, progress_bar= self.circular_progress_bar)
+            Functions.copy_dir(source_folder=src_folder, progress_bar= self.circular_progress_bar)"""
 
 
 
