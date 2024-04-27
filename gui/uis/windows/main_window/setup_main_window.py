@@ -399,7 +399,7 @@ class SetupMainWindow:
         ##################################################
 
         self.circular_bar_train_model= PyCircularProgress(
-            value=40, is_rounded=False
+            value=0, is_rounded=False
         )
         self.ui.load_pages.circular_layout_3.addWidget(self.circular_bar_train_model)
 

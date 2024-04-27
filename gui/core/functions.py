@@ -19,6 +19,7 @@
 import os
 import shutil
 from datetime import datetime
+import threading
 import random
 
 from yolov8.src.yolo_utils import YOLO8Functions
@@ -113,11 +114,13 @@ class Functions:
 
     def start_training(setup_window):
         if setup_window.btn_yolo8.isChecked():
+            setup_window.circular_bar_train_model.set_value(10)
             Functions.start_training_yolo8()
+            setup_window.circular_bar_train_model.set_value(100)
         if setup_window.btn_yolo5.isChecked():
             Functions.start_training_yolo5()
         else:
-            print(f"SELECT AT LEAST ONE OPTION.")
+            print(f"SELECT AT LEAST ONE MODEL.")
 
 
 
