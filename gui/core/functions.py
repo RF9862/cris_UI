@@ -18,6 +18,7 @@
 # ///////////////////////////////////////////////////////////////
 import os
 import shutil
+import time
 from datetime import datetime
 import threading
 import random
@@ -100,25 +101,33 @@ class Functions:
             print(f"Error: {e}")
 
     
-    def start_training_yolo8():
+    def start_training_yolo8(progress_bar):
         yolo = YOLO8Functions(data_dir=Functions.current_destination_dir)
-
-        yolo.train()
+        
+        t1 = threading.Thread(target=yolo.train)
+        t1.start()
+        while t1.is_alive():
+            yolo.check_status(progress_bar)
+            time.sleep(1)
+        #yolo.train()
 
     
-    def start_training_yolo5():
+    def start_training_yolo5(progress_bar):
         yolo = YOLO5Functions(data_dir=Functions.current_destination_dir)
 
-        yolo.train()
+        t1 = threading.Thread(target=yolo.train)
+        t1.start()
+        while t1.is_alive():
+            yolo.check_status(progress_bar)
+            time.sleep(1)
+        #yolo.train()
 
 
     def start_training(setup_window):
         if setup_window.btn_yolo8.isChecked():
-            setup_window.circular_bar_train_model.set_value(10)
-            Functions.start_training_yolo8()
-            setup_window.circular_bar_train_model.set_value(100)
-        if setup_window.btn_yolo5.isChecked():
-            Functions.start_training_yolo5()
+            Functions.start_training_yolo8(setup_window.circular_bar_train_model)
+        elif setup_window.btn_yolo5.isChecked():
+            Functions.start_training_yolo5(setup_window.circular_bar_train_model)
         else:
             print(f"SELECT AT LEAST ONE MODEL.")
 

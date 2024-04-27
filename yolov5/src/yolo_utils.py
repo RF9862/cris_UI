@@ -47,8 +47,8 @@ class YOLO5Functions:
     def define_parameters(self):
         param = dict()
 
-        param["epochs"] = 2
-        param["batch"] = 8
+        param["epochs"] = 4
+        param["batch"] = 5
         param["name"] = "yolo5_custom"
 
         self.parameters = param
@@ -109,6 +109,30 @@ class YOLO5Functions:
         self.val_data_dir = val_dir
 
         print(f"Data split and moved successfully. Train: {len(train_files)}, Validation: {len(val_files)}")
+
+
+    
+    def check_status(self, progress_bar=None):
+        try:
+            current_epoch = find_current_epoch(self.model.trainer.pbar.desc)
+            prev_progress = (current_epoch-1) / self.parameters["epochs"] * 100
+            current_progress = (self.model.trainer.pbar.n / self.model.trainer.pbar.total *100) / self.parameters['epochs']
+            progress = prev_progress+current_progress
+            #print(f"\n\n\n{prev_progress+current_progress}")
+            if progress_bar:
+                progress_bar.set_value(int(progress))
+            
+        except Exception as e:
+            pass
+
+
+
+
+import re
+def find_current_epoch(description):
+    x = re.findall("[0-9]/[0-9]", description)[0]
+    current_epoch = int(x.split("/")[0])
+    return current_epoch
 
 
 
