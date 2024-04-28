@@ -191,12 +191,20 @@ class Ui_MainPages(object):
         self.label_17 = QLabel(self.frame_test_model)
         self.label_17.setObjectName(u"label_17")
         self.label_17.setGeometry(QRect(100, 0, 360, 41))
+
         self.verticalLayoutWidget_5 = QWidget(self.frame_test_model)
         self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
         self.verticalLayoutWidget_5.setGeometry(QRect(120, 50, 251, 161))
-        self.circular_layout_5 = QVBoxLayout(self.verticalLayoutWidget_5)
-        self.circular_layout_5.setObjectName(u"circular_layout_5")
-        self.circular_layout_5.setContentsMargins(0, 0, 0, 0)
+        #self.circular_layout_5 = QVBoxLayout(self.verticalLayoutWidget_5)
+        #self.circular_layout_5.setObjectName(u"circular_layout_5")
+        #self.circular_layout_5.setContentsMargins(0, 0, 0, 0)
+
+        self.select_models_list = QComboBox(self.verticalLayoutWidget_5)
+        self.btn_layout_20 = QHBoxLayout(self.verticalLayoutWidget_5)
+        self.btn_layout_20.setObjectName(u"btn_layout_20")
+        self.btn_layout_20.setContentsMargins(0, 0, 0, 0)
+
+
         self.label_18 = QLabel(self.frame_test_model)
         self.label_18.setObjectName(u"label_18")
         self.label_18.setGeometry(QRect(90, 210, 311, 41))

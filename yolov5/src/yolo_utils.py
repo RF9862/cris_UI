@@ -2,6 +2,7 @@ import os
 import random
 from yaml import dump, load
 import shutil
+import glob
 from yolov5.src import config
 from ultralytics import YOLO
 
@@ -141,6 +142,16 @@ class YOLO5Functions:
     
     def get_custom_model_path(self):
         return self.results.save_dir if self.results.save_dir else None
+    
+
+
+       
+    def get_available_models(save_models_dir = config.SAVE_MODEL_PATH):
+        pattern = os.path.join(save_models_dir, "**", "best.pt")
+        pt_files  = glob.glob(pattern, recursive=True)
+        return pt_files
+
+
     
 
 

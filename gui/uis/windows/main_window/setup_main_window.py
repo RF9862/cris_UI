@@ -399,6 +399,25 @@ class SetupMainWindow:
 
         ##################################################
 
+        
+        self.btn_refresh_models = PyPushButton(
+            text="Refresh",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"]
+        )
+        self.ui.load_pages.btn_layout_20.addWidget(self.btn_refresh_models)
+        def refresh_models():
+            models = Functions.get_available_models()
+            self.ui.load_pages.select_models_list.addItems(models)
+        self.btn_refresh_models.clicked.connect(refresh_models)
+
+
+        ##################################################
+
+
         # Test model
         self.btn_upload_test = UploadButton(
             text="Upload",
@@ -426,7 +445,9 @@ class SetupMainWindow:
 
         def predict_image():
             files = self.btn_upload_test.files
-            save_file = Functions.predict_image_yolo(files[0])
+            selected_model = self.ui.load_pages.select_models_list.currentText()
+            print(selected_model)
+            save_file = Functions.predict_image_yolo(files[0], selected_model)
             print(save_file)
             
             pixmap = QPixmap(save_file)

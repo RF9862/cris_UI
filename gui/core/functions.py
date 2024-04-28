@@ -19,10 +19,12 @@
 import os
 import shutil
 import time
+import glob
 from datetime import datetime
 import threading
 import random
 
+from ultralytics import YOLO
 from yolov8.src.yolo_utils import YOLO8Functions
 from yolov5.src.yolo_utils import YOLO5Functions
 from yolov8.src.config import SAVE_MODEL_PATH
@@ -32,7 +34,7 @@ from gui.core.json_settings import Settings
 UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
-
+SAVE_PREDICTIONS_DIR = os.path.join(os.getcwd(), "predictions")
 
 
 class UtilityFunctions:
@@ -76,6 +78,7 @@ class Functions:
     current_destination_dir = None
     save_model_path = None
     yolo = None
+    save_predictions_dir = SAVE_PREDICTIONS_DIR
 
     # SET SVG ICON
     # ///////////////////////////////////////////////////////////////
@@ -164,9 +167,24 @@ class Functions:
             return "No current model found."
         
     
-    def predict_image_yolo(img_file_path):
-        save_file_path = Functions.yolo.predict(img_file_path)
-        return save_file_path
+    def predict_image_yolo(img_file_path, selected_model_path):
+
+        model = YOLO(selected_model_path)
+        os.makedirs(Functions.save_predictions_dir, exist_ok=True)
+        prediction = model(img_file_path)
+        save_path = os.path.join(Functions.save_predictions_dir, os.path.basename(img_file_path))
+        prediction[0].save(filename=save_path)
+
+        print(f"Prediction results saved to : {Functions.save_predictions_dir}")
+        return save_path
+    
+
+    def get_available_models():
+        models = list()
+        models5 = YOLO5Functions.get_available_models()
+        models8 = YOLO8Functions.get_available_models()
+        models = models5 + models8
+        return models
 
 
 
