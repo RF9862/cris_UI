@@ -13,7 +13,7 @@
 # https://doc.qt.io/qtforpython/licenses.html
 #
 # ///////////////////////////////////////////////////////////////
-
+import threading
 # IMPORT PACKAGES AND MODULES
 # ///////////////////////////////////////////////////////////////
 from gui.widgets.py_table_widget.py_table_widget import PyTableWidget
@@ -47,6 +47,14 @@ from . ui_main import *
 # MAIN FUNCTIONS 
 # ///////////////////////////////////////////////////////////////
 from . functions_main_window import *
+
+
+
+
+uploading_ongoing = [False]
+training_ongoing = [False]
+
+
 
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -193,8 +201,10 @@ class SetupMainWindow:
         self.themes = themes.items
 
         
-        
-        ############# YOLO 5 BUTTON ##########
+        ###############################################33
+        # yolo buttons
+
+        ## YOLO 5 BUTTON 
         self.btn_yolo5 = ToggleButton(
             text="YOLO 5",
             radius=10,
@@ -203,17 +213,9 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"]
         )
-
         self.ui.load_pages.btn_layout_1.addWidget(self.btn_yolo5)
         
-        """def print_check():
-            if self.btn_yolo5.isChecked():
-                print("Checked ....")
-        self.btn_yolo5.clicked.connect(print_check)"""
-        
-
-        
-        ############# YOLO 8 BUTTON ##########
+        ## YOLO 8 BUTTON 
         self.btn_yolo8 = ToggleButton(
             text="YOLO 8",
             radius=8,
@@ -235,8 +237,8 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_load_images)
+
 
         self.btn_start_training = ToggleButton(
             text="Start training",
@@ -246,8 +248,8 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_start_training)
+
 
         self.btn_save_model = ToggleButton(
             text="Save/Name model",
@@ -257,8 +259,8 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_save_model)
+
 
         self.btn_test_model= ToggleButton(
             text="Test model",
@@ -268,7 +270,6 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_2.addWidget(self.btn_test_model)
 
         ############ Camera buttons ##############
@@ -280,7 +281,6 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_3.addWidget(self.btn_camera_A)
 
         self.btn_Drone_A= ToggleButton(
@@ -291,12 +291,11 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
-
         self.ui.load_pages.btn_layout_3.addWidget(self.btn_Drone_A)
 
 
-        ###########################
+        ##############################################
+        # load images buttons
 
         self.btn_back= PyPushButton(
             text="Back",
@@ -306,45 +305,44 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_back)
 
-        ##############################################
+        ## circular progress bar for uploading data
         self.circular_bar_load_img = PyCircularProgress(
             value=0, is_rounded=False
         )
         self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
-        ##################################################
 
-        
+        # upload button
         self.btn_next = UploadButton(
             text="Upload",
             radius=8,
+            type="folder",
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
             circular_progress_bar=self.circular_bar_load_img
         )
-
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
+
 
         self.btn_next.clicked.connect(
             partial(Functions.upload_folder, self)
             )
 
+
         ##################################################################
+        # train model buttons
 
         self.btn_back_train = ToggleButton(
-            text="Back",
+            text="Stop training",
             radius=8,
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
-
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
 
 
@@ -356,38 +354,86 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
-
-
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
 
-
+        
+        def trainThread():
+            if not training_ongoing[0]:
+                training_ongoing[0] = True
+                t1 = threading.Thread(target=Functions.start_training, args=(self,training_ongoing))
+                t1.start()
+            
         self.btn_train.clicked.connect(
-            partial(Functions.start_training, self)
+            #partial(Functions.start_training, self)
+            trainThread
             )
 
 
 
 
         ##################################################################
-
-        self.btn_save = ToggleButton(
-            text="Save",
+        # Save/Name model buttons
+        self.btn_show_path = PyPushButton(
+            text="Show path",
             radius=8,
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
+        self.ui.load_pages.btn_layout_8.addWidget(self.btn_show_path)
 
-
-        self.ui.load_pages.btn_layout_8.addWidget(self.btn_save)
+        def update_show_model_path():
+            model_path = Functions.get_save_model_path()
+            self.ui.load_pages.label_14.setText(model_path)
+        self.btn_show_path.clicked.connect(update_show_model_path)
 
 
         ##################################################################
 
+        self.circular_bar_test_model= PyCircularProgress(
+            value=100, is_rounded=False, custom_text="SUCCESS",
+            font_size=20, progress_color="#00ff7f"
+        )
+        #self.ui.load_pages.circular_layout_4.addWidget(self.circular_bar_save_model)
 
+        ##################################################
 
+        # Test model
+        self.btn_upload_test = UploadButton(
+            text="Upload",
+            radius=8,
+            type="file",
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+            circular_progress_bar=self.circular_bar_test_model
+        )
+        self.ui.load_pages.btn_layout_9.addWidget(self.btn_upload_test)
 
+        #### predict button
+
+        self.btn_test_submit = PyPushButton(
+            text="Predict",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"]
+        )
+        self.ui.load_pages.btn_layout_9.addWidget(self.btn_test_submit)
+
+        def predict_image():
+            files = self.btn_upload_test.files
+            save_file = Functions.predict_image_yolo(files[0])
+            print(save_file)
+            
+            pixmap = QPixmap(save_file)
+            self.ui.load_pages.graphicsView1.setPixmap(pixmap)
+            self.ui.load_pages.graphicsView1.show()
+
+        self.btn_test_submit.clicked.connect(predict_image)
 
 
         ##################################################################
@@ -405,13 +451,7 @@ class SetupMainWindow:
         )
         self.ui.load_pages.circular_layout_3.addWidget(self.circular_bar_train_model)
 
-        ##################################################
-
-        self.circular_bar_save_model= PyCircularProgress(
-            value=100, is_rounded=False, custom_text="SUCCESS",
-            font_size=20, progress_color="#00ff7f"
-        )
-        self.ui.load_pages.circular_layout_4.addWidget(self.circular_bar_save_model)
+        
 
 
         # /////////////////////////// BUTTON FUNCTIONS //////////
@@ -425,6 +465,9 @@ class SetupMainWindow:
 
             self.ui.load_pages.frame_save_model.setEnabled(False)
             self.ui.load_pages.frame_save_model.setVisible(False)
+
+            self.ui.load_pages.frame_test_model.setEnabled(False)
+            self.ui.load_pages.frame_test_model.setVisible(False)
 
 
 
@@ -453,6 +496,18 @@ class SetupMainWindow:
                 self.ui.load_pages.frame_save_model.setVisible(True)
 
         self.btn_save_model.clicked.connect(set_save_model_page)
+
+
+
+        def set_test_model_page():
+            clear_frame()
+            if self.btn_test_model.isChecked():
+                self.ui.load_pages.frame_test_model.setEnabled(True)
+                self.ui.load_pages.frame_test_model.setVisible(True)
+
+        self.btn_test_model.clicked.connect(set_test_model_page)
+
+
 
         ######################################
 

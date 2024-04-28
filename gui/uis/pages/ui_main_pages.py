@@ -15,14 +15,16 @@ class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1106, 591)
+        #MainPages.resize(1106, 591)
+
+
         self.main_pages_layout = QVBoxLayout(MainPages)
         self.main_pages_layout.setSpacing(0)
         self.main_pages_layout.setObjectName(u"main_pages_layout")
         self.main_pages_layout.setContentsMargins(5, 5, 5, 5)
         self.pages = QStackedWidget(MainPages)
         self.pages.setObjectName(u"pages")
-        self.page_1 = QWidget()
+        self.page_1 = QWidget(MainPages)
         self.page_1.setObjectName(u"page_1")
         self.page_1.setStyleSheet(u"font-size: 14pt")
         self.page_1_layout = QVBoxLayout(self.page_1)
@@ -103,6 +105,9 @@ class Ui_MainPages(object):
         self.btn_layout_2 = QHBoxLayout(self.layoutWidget2)
         self.btn_layout_2.setObjectName(u"btn_layout_2")
         self.btn_layout_2.setContentsMargins(0, 0, 0, 0)
+
+
+
         self.frame_train_model = QFrame(self.frame_2)
         self.frame_train_model.setObjectName(u"frame_train_model")
         self.frame_train_model.setGeometry(QRect(60, 160, 521, 301))
@@ -135,6 +140,9 @@ class Ui_MainPages(object):
         self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_3)
         self.btn_layout_7.setObjectName(u"btn_layout_7")
         self.btn_layout_7.setContentsMargins(0, 0, 0, 0)
+
+
+
         self.frame_save_model = QFrame(self.frame_2)
         self.frame_save_model.setObjectName(u"frame_save_model")
         self.frame_save_model.setGeometry(QRect(60, 160, 521, 301))
@@ -148,22 +156,60 @@ class Ui_MainPages(object):
 
         self.label_13 = QLabel(self.frame_save_model)
         self.label_13.setObjectName(u"label_13")
-        self.label_13.setGeometry(QRect(100, 0, 360, 41))
-        self.verticalLayoutWidget_4 = QWidget(self.frame_save_model)
-        self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(120, 50, 251, 161))
-        self.circular_layout_4 = QVBoxLayout(self.verticalLayoutWidget_4)
-        self.circular_layout_4.setObjectName(u"circular_layout_4")
-        self.circular_layout_4.setContentsMargins(0, 0, 0, 0)
+        self.label_13.setGeometry(QRect(60, 0, 400, 41))
+        #self.verticalLayoutWidget_4 = QWidget(self.frame_save_model)
+        #self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
+        #self.verticalLayoutWidget_4.setGeometry(QRect(120, 50, 251, 161))
+        #self.circular_layout_4 = QVBoxLayout(self.verticalLayoutWidget_4)
+        #self.circular_layout_4.setObjectName(u"circular_layout_4")
+        #self.circular_layout_4.setContentsMargins(0, 0, 0, 0)
         self.label_14 = QLabel(self.frame_save_model)
         self.label_14.setObjectName(u"label_14")
-        self.label_14.setGeometry(QRect(90, 210, 311, 41))
+        self.label_14.setGeometry(QRect(0, 60, 500, 100))
+        self.label_14.setWordWrap(True)
         self.horizontalLayoutWidget_4 = QWidget(self.frame_save_model)
         self.horizontalLayoutWidget_4.setObjectName(u"horizontalLayoutWidget_4")
         self.horizontalLayoutWidget_4.setGeometry(QRect(80, 240, 321, 49))
         self.btn_layout_8 = QHBoxLayout(self.horizontalLayoutWidget_4)
         self.btn_layout_8.setObjectName(u"btn_layout_8")
         self.btn_layout_8.setContentsMargins(0, 0, 0, 0)
+
+
+
+
+        self.frame_test_model = QFrame(self.frame_2)
+        self.frame_test_model.setObjectName(u"frame_test_model")
+        self.frame_test_model.setGeometry(QRect(60, 160, 521, 301))
+        self.frame_test_model.setFrameShape(QFrame.NoFrame)
+        self.frame_test_model.setFrameShadow(QFrame.Raised)
+
+
+        self.frame_test_model.setEnabled(False)
+        self.frame_test_model.setVisible(False)
+
+
+        self.label_17 = QLabel(self.frame_test_model)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(100, 0, 360, 41))
+        self.verticalLayoutWidget_5 = QWidget(self.frame_test_model)
+        self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
+        self.verticalLayoutWidget_5.setGeometry(QRect(120, 50, 251, 161))
+        self.circular_layout_5 = QVBoxLayout(self.verticalLayoutWidget_5)
+        self.circular_layout_5.setObjectName(u"circular_layout_5")
+        self.circular_layout_5.setContentsMargins(0, 0, 0, 0)
+        self.label_18 = QLabel(self.frame_test_model)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setGeometry(QRect(90, 210, 311, 41))
+        self.horizontalLayoutWidget_5 = QWidget(self.frame_test_model)
+        self.horizontalLayoutWidget_5.setObjectName(u"horizontalLayoutWidget_5")
+        self.horizontalLayoutWidget_5.setGeometry(QRect(80, 240, 321, 49))
+
+        self.btn_layout_9 = QHBoxLayout(self.horizontalLayoutWidget_5)
+        self.btn_layout_9.setObjectName(u"btn_layout_9")
+        self.btn_layout_9.setContentsMargins(0, 0, 0, 0)
+        
+
+
         self.label.raise_()
         self.label_2.raise_()
         self.groupBox_1.raise_()
@@ -174,22 +220,29 @@ class Ui_MainPages(object):
         self.frame_load_images.raise_()
         self.frame_train_model.raise_()
         self.frame_save_model.raise_()
-        self.graphicsView1 = QGraphicsView(self.frame)
+        self.frame_test_model.raise_()
+
+
+
+        self.graphicsView1 = QLabel(self.frame)
         self.graphicsView1.setObjectName(u"graphicsView1")
         self.graphicsView1.setGeometry(QRect(640, 100, 256, 192))
         self.graphicsView1.setFrameShape(QFrame.NoFrame)
-        self.graphicsView2 = QGraphicsView(self.frame)
+        self.graphicsView2 = QLabel(self.frame)
         self.graphicsView2.setObjectName(u"graphicsView2")
         self.graphicsView2.setGeometry(QRect(940, 380, 256, 192))
         self.graphicsView2.setFrameShape(QFrame.NoFrame)
-        self.graphicsView3 = QGraphicsView(self.frame)
+        self.graphicsView3 = QLabel(self.frame)
         self.graphicsView3.setObjectName(u"graphicsView3")
         self.graphicsView3.setGeometry(QRect(640, 380, 256, 192))
         self.graphicsView3.setFrameShape(QFrame.NoFrame)
-        self.graphicsView4 = QGraphicsView(self.frame)
+        self.graphicsView4 = QLabel(self.frame)
         self.graphicsView4.setObjectName(u"graphicsView4")
         self.graphicsView4.setGeometry(QRect(930, 100, 256, 192))
         self.graphicsView4.setFrameShape(QFrame.NoFrame)
+
+
+
         self.label_4 = QLabel(self.frame)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(680, 70, 151, 17))
@@ -243,8 +296,14 @@ class Ui_MainPages(object):
         self.groupBox_2.setTitle("")
         self.label_11.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Training started for YOLO5</p></body></html>", None))
         self.label_12.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>On 250 images</p></body></html>", None))
-        self.label_13.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>250 images are required for YOLO5</p></body></html>", None))
-        self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Drag and Drop or Select images</p></body></html>", None))
+        self.label_13.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>The trained model's path is given below:</p></body></html>", None))
+        #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Drag and Drop or Select images</p></body></html>", None))
+        #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>path here.</p></body></html>", None))
+        
+        self.label_17.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select model </p></body></html>", None))
+        self.label_18.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select images</p></body></html>", None))
+        
+
         self.label_4.setText(QCoreApplication.translate("MainPages", u"Stream Name A", None))
         self.label_5.setText(QCoreApplication.translate("MainPages", u"Preview Stream", None))
         self.label_6.setText(QCoreApplication.translate("MainPages", u"Preview Stream", None))

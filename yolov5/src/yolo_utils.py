@@ -10,7 +10,8 @@ from ultralytics import YOLO
 class YOLO5Functions:
     def __init__(self, data_dir, 
                  model_path = config.YOLO8_MODEL_PATH,
-                 save_model_dir = config.SAVE_MODEL_PATH):
+                 save_model_dir = config.SAVE_MODEL_PATH, 
+                 save_predictions_dir = config.SAVE_PREDICTIONS_DIR):
         
         self.data_dir = data_dir
         self.split_ratio = config.SPLIT_RATIO
@@ -20,6 +21,8 @@ class YOLO5Functions:
         self.save_model_dir = os.path.join(save_model_dir, os.path.basename(self.data_dir))
 
         self.custom_yaml_file_path = config.CUSTOM_YAML_PATH
+
+        self.save_predictions_dir = save_predictions_dir
 
         self.split_data_into_train_val()
 
@@ -65,6 +68,16 @@ class YOLO5Functions:
         self.results = results
 
     
+    def predict(self, img_file_path):
+        os.makedirs(self.save_predictions_dir, exist_ok=True)
+        prediction = self.model(img_file_path)
+        save_path = os.path.join(self.save_predictions_dir, os.path.basename(img_file_path))
+        prediction[0].save(filename=save_path)
+
+        print(f"Prediction results saved to : {self.save_predictions_dir}")
+        return save_path
+    
+
     
     def split_data_into_train_val(self):
         
@@ -125,12 +138,18 @@ class YOLO5Functions:
         except Exception as e:
             pass
 
+    
+    def get_custom_model_path(self):
+        return self.results.save_dir if self.results.save_dir else None
+    
+
 
 
 
 import re
 def find_current_epoch(description):
-    x = re.findall("[0-9]/[0-9]", description)[0]
+    pattern = r"\b\d+/\d+\b"
+    x = re.findall(pattern, description)[0]
     current_epoch = int(x.split("/")[0])
     return current_epoch
 

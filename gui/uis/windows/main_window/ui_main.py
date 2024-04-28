@@ -74,7 +74,7 @@ class UI_MainWindow(object):
         # SET CENTRAL WIDGET
         # Add central widget to app
         # ///////////////////////////////////////////////////////////////
-        self.central_widget = QWidget()
+        self.central_widget = QWidget(parent)
         self.central_widget.setStyleSheet(f'''
             font: {self.settings["font"]["text_size"]}pt "{self.settings["font"]["family"]}";
             color: {self.themes["app_color"]["text_foreground"]};
@@ -218,7 +218,7 @@ class UI_MainWindow(object):
 
         # ADD CONTENT AREA
         # ///////////////////////////////////////////////////////////////
-        self.content_area_frame = QFrame()
+        self.content_area_frame = QFrame(parent)
 
         # CREATE LAYOUT
         self.content_area_layout = QHBoxLayout(self.content_area_frame)

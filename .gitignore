@@ -9,3 +9,5 @@
 yolo/
 **/runs/
 UPLOAD/
+assets/
+**/predictions/

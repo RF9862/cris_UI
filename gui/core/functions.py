@@ -34,11 +34,48 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
 
 
+
+class UtilityFunctions:
+    
+
+    def copy_dir(source_folder , progress_bar=None, destination_folder=DESTINATION_DIR):
+        
+        DIR_NAME = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
+        DIR_path = os.path.join(destination_folder, DIR_NAME)
+        os.makedirs(DIR_path, exist_ok=True)
+
+        Functions.current_destination_dir = DIR_path
+        try:
+
+            file_names = os.listdir(source_folder)
+
+            total_size = len(file_names)
+
+            for i, file_name in enumerate(file_names):
+                src_file = os.path.join(source_folder, file_name)
+                dst_file = os.path.join(Functions.current_destination_dir, file_name)
+                # Copy the entire folder recursively
+                shutil.copyfile(src_file, dst_file)
+
+                if progress_bar:
+                    current_progress = (i+1)/total_size * 100
+                    progress_bar.set_value(int(current_progress))
+
+            print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+
+
+
 # APP FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 class Functions:
 
     current_destination_dir = None
+    save_model_path = None
+    yolo = None
 
     # SET SVG ICON
     # ///////////////////////////////////////////////////////////////
@@ -68,75 +105,69 @@ class Functions:
         return image
     
 
-    def copy_dir(source_folder , progress_bar=None, destination_folder=DESTINATION_DIR):
-        
-        DIR_NAME = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
-        DIR_path = os.path.join(destination_folder, DIR_NAME)
-        os.makedirs(DIR_path, exist_ok=True)
-
-        Functions.current_destination_dir = DIR_path
-        try:
-            
-            file_names = os.listdir(source_folder)
-
-            total_size = len(file_names)
-
-            for i, file_name in enumerate(file_names):
-                src_file = os.path.join(source_folder, file_name)
-                dst_file = os.path.join(Functions.current_destination_dir, file_name)
-                # Copy the entire folder recursively
-                shutil.copyfile(src_file, dst_file)
-
-                if progress_bar:
-                    current_progress = (i+1)/total_size * 100
-                    progress_bar.set_value(int(current_progress))
-
-
-            
-
-            
-            print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
-
-        except Exception as e:
-            print(f"Error: {e}")
+    def remove_uploaded_files(setup_window):
+        pass
 
 
     def upload_folder(setup_window):
-        Functions.copy_dir(
+        UtilityFunctions.copy_dir(
             source_folder=setup_window.btn_next.src_folder,
-            progress_bar=setup_window.btn_next.circular_progress_bar
+            progress_bar=setup_window.circular_bar_load_img
         )
 
     
     def start_training_yolo8(progress_bar):
         yolo = YOLO8Functions(data_dir=Functions.current_destination_dir)
-        
+        Functions.yolo = yolo
         t1 = threading.Thread(target=yolo.train)
         t1.start()
         while t1.is_alive():
             yolo.check_status(progress_bar)
             time.sleep(1)
-        #yolo.train()
+        Functions.save_model_path = yolo.get_custom_model_path()
 
     
     def start_training_yolo5(progress_bar):
         yolo = YOLO5Functions(data_dir=Functions.current_destination_dir)
 
+        Functions.yolo = yolo
+
         t1 = threading.Thread(target=yolo.train)
         t1.start()
         while t1.is_alive():
             yolo.check_status(progress_bar)
             time.sleep(1)
-        #yolo.train()
+        Functions.save_model_path = yolo.get_custom_model_path()
 
 
-    def start_training(setup_window):
-        if setup_window.btn_yolo8.isChecked():
-            Functions.start_training_yolo8(setup_window.circular_bar_train_model)
-        elif setup_window.btn_yolo5.isChecked():
-            Functions.start_training_yolo5(setup_window.circular_bar_train_model)
+    def start_training(setup_window, status):
+        # first two conditions check if the data is uploaded
+        if hasattr(setup_window.btn_next, "src_folder"):
+            if setup_window.btn_next.src_folder:
+                if setup_window.btn_yolo8.isChecked():
+                    Functions.start_training_yolo8(setup_window.circular_bar_train_model)
+                elif setup_window.btn_yolo5.isChecked():
+                    Functions.start_training_yolo5(setup_window.circular_bar_train_model)
+                else:
+                    print(f"SELECT AT LEAST ONE MODEL.")
+            
         else:
-            print(f"SELECT AT LEAST ONE MODEL.")
+            print("No data folder selected.")
+        status[0] = False
+        
+
+
+    def get_save_model_path():
+        if Functions.save_model_path:
+            return str(Functions.save_model_path)
+        else:
+            return "No current model found."
+        
+    
+    def predict_image_yolo(img_file_path):
+        save_file_path = Functions.yolo.predict(img_file_path)
+        return save_file_path
+
 
 
 

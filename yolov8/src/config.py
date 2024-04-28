@@ -20,6 +20,8 @@ YOLO8_MODEL_PATH = os.path.join(ROOT_DIR, "yolov8", "yolov8n.pt") # yolov8/yolov
 
 SAVE_MODEL_PATH = os.path.join(ROOT_DIR, "yolov8", "runs")
 
+SAVE_PREDICTIONS_DIR = os.path.join(ROOT_DIR, "yolov8", "predictions")
+
 CLASS_NAMES = ["pothole"]
 
 

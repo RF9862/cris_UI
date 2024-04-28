@@ -1,5 +1,6 @@
 
 import time, os
+from typing import Optional, Union
 from PySide6.QtWidgets import QPushButton, QFileDialog
 from PySide6.QtCore import QThread, Signal
 
@@ -42,11 +43,17 @@ class UploadButton(QPushButton):
         bg_color_hover,
         bg_color_pressed,
         circular_progress_bar,
+        type,
         parent = None,
     ):
         super().__init__()
 
-        self.clicked.connect(self.upload_folder)
+        if type=="folder":
+            self.clicked.connect(self.upload_folder)
+        elif type=="file":
+            self.clicked.connect(self.upload_files)
+        else:
+            raise Exception("Type must be one of : ['folder' or 'file']")
 
         self.circular_progress_bar = circular_progress_bar
 
@@ -71,9 +78,8 @@ class UploadButton(QPushButton):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         if file_dialog.exec():
-            files = file_dialog.selectedFiles()
-            self.file_uploader.files = files
-            self.file_uploader.start()
+            self.files = file_dialog.selectedFiles()
+            #print(f"Selected files : {self.files}")
 
 
     def upload_folder(self):
@@ -81,16 +87,6 @@ class UploadButton(QPushButton):
         self.src_folder = QFileDialog.getExistingDirectory(self, "Select folder",
                                                       options=options)
         
-        """if src_folder:
-            print(f"Selected folder : {src_folder}")
-
-            # copy the dir
-            Functions.copy_dir(source_folder=src_folder, progress_bar= self.circular_progress_bar)"""
-
-
-
-    def update_progress(self, progress): 
-        self.circular_progress_bar.set_value(progress)
 
 
 
