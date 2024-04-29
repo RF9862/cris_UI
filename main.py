@@ -22,7 +22,6 @@ import os
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-
 from qt_core import *
 
 # IMPORT SETTINGS

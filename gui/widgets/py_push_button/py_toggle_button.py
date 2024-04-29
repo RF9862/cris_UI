@@ -38,15 +38,6 @@ QPushButton:checked {{
                                       stop:0 #cd18ee, stop: 0.5 #cd18ee,
                                       stop: 0.8 #1886ee, stop:1 #1886ee);
 }}
-QPushButton:disabled {{
-            color: white;
-}}
-QPushButton:disabled:checked {{
-            background-color: #ffaaaa;
-}}
-QPushButton:disabled:!checked {{
-            background-color: gray;
-}}
 '''
 
 
@@ -60,7 +51,6 @@ class ToggleButton(QPushButton):
     bg_color_hover,
     bg_color_pressed,
     parent = None,
-    deactive = False,
     ):
         super().__init__()
 
@@ -82,7 +72,6 @@ class ToggleButton(QPushButton):
         self.setStyleSheet(self.custom_style)
         self.setCheckable(True)
         self.setChecked(False)
-        self.setDisabled(deactive)
         
         self.clicked.connect(self.toggle_state)
 
