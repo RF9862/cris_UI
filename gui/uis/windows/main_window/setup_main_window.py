@@ -332,8 +332,8 @@ class SetupMainWindow:
             self.ui.load_pages.verticalLayoutWidget.show()
             
             
-            t1 = threading.Thread(target=Functions.upload_folder, args=(self,))
-            t1.start()
+            u1 = threading.Thread(target=Functions.upload_folder, args=(self,))
+            u1.start()
 
 
         self.btn_next.clicked.connect(
