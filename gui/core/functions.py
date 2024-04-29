@@ -64,9 +64,10 @@ class UtilityFunctions:
                     progress_bar.set_value(int(current_progress))
 
             print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
-
+            return 1
         except Exception as e:
             print(f"Error: {e}")
+            return 0
 
 
 
@@ -113,10 +114,17 @@ class Functions:
 
 
     def upload_folder(setup_window):
-        UtilityFunctions.copy_dir(
+        result = UtilityFunctions.copy_dir(
             source_folder=setup_window.btn_next.src_folder,
             progress_bar=setup_window.circular_bar_load_img
         )
+        if result:
+            setup_window.ui.load_pages.verticalLayoutWidget.hide()
+            setup_window.ui.load_pages.label_3.setText("Successfully Uploaded")
+            setup_window.ui.load_pages.label_3.show()
+            print("hide")
+        else:
+            print("error======")
 
     
     def start_training_yolo8(progress_bar):
@@ -156,6 +164,9 @@ class Functions:
             
         else:
             print("No data folder selected.")
+            setup_window.ui.load_pages.label_11.show()
+            setup_window.ui.load_pages.label_11.setText("No data folder selected")
+            setup_window.ui.load_pages.verticalLayoutWidget_3.hide()  
         status[0] = False
         
 
