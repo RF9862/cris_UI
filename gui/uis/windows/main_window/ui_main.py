@@ -218,7 +218,7 @@ class UI_MainWindow(object):
 
         # ADD CONTENT AREA
         # ///////////////////////////////////////////////////////////////
-        self.content_area_frame = QFrame(parent)
+        self.content_area_frame = QFrame()
 
         # CREATE LAYOUT
         self.content_area_layout = QHBoxLayout(self.content_area_frame)

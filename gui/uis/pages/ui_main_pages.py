@@ -236,6 +236,10 @@ class Ui_MainPages(object):
         self.graphicsView1.setObjectName(u"graphicsView1")
         self.graphicsView1.setGeometry(QRect(640, 100, 256, 192))
         self.graphicsView1.setFrameShape(QFrame.NoFrame)
+
+        self.graphicsView1.setScaledContents(True)
+
+
         self.graphicsView2 = QLabel(self.frame)
         self.graphicsView2.setObjectName(u"graphicsView2")
         self.graphicsView2.setGeometry(QRect(940, 380, 256, 192))
@@ -288,7 +292,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainPages)
