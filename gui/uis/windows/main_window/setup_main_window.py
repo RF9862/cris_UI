@@ -326,9 +326,19 @@ class SetupMainWindow:
         )
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
+        
+        def uploadThread():
+            self.ui.load_pages.label_3.hide()
+            self.ui.load_pages.verticalLayoutWidget.show()
+            
+            
+            t1 = threading.Thread(target=Functions.upload_folder, args=(self,))
+            t1.start()
+
 
         self.btn_next.clicked.connect(
-            partial(Functions.upload_folder, self)
+            uploadThread
+            # partial(Functions.upload_folder, self)
             )
 
 
@@ -342,6 +352,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
+            deactive=True,
         )
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
 
@@ -359,6 +370,9 @@ class SetupMainWindow:
         
         def trainThread():
             if not training_ongoing[0]:
+                self.ui.load_pages.label_11.hide()
+                self.ui.load_pages.verticalLayoutWidget_3.show()     
+                self.btn_back_train.setDisabled(False)
                 training_ongoing[0] = True
                 t1 = threading.Thread(target=Functions.start_training, args=(self,training_ongoing))
                 t1.start()
@@ -420,7 +434,7 @@ class SetupMainWindow:
 
         # Test model
         self.btn_upload_test = UploadButton(
-            text="Upload",
+            text="Upload__",
             radius=8,
             type="file",
             color=self.themes["app_color"]["text_title"],
