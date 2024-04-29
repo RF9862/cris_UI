@@ -128,18 +128,76 @@ class Ui_MainPages(object):
         self.verticalLayoutWidget_3 = QWidget(self.frame_train_model)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
         self.verticalLayoutWidget_3.setGeometry(QRect(90, 50, 251, 161))
+
+
         self.circular_layout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.circular_layout_3.setObjectName(u"circular_layout_3")
         self.circular_layout_3.setContentsMargins(0, 0, 0, 0)
+
+
+
         self.label_12 = QLabel(self.frame_train_model)
         self.label_12.setObjectName(u"label_12")
         self.label_12.setGeometry(QRect(90, 210, 311, 41))
         self.horizontalLayoutWidget_3 = QWidget(self.frame_train_model)
         self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
         self.horizontalLayoutWidget_3.setGeometry(QRect(80, 240, 321, 49))
-        self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_3)
+
+        #self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_3)
+        #self.btn_layout_7.setObjectName(u"btn_layout_7")
+        #self.btn_layout_7.setContentsMargins(0, 0, 0, 0)
+
+
+        ###############################################
+
+
+        self.frame_train_model_param = QFrame(self.frame_2)
+        self.frame_train_model_param.setObjectName(u"frame_train_model_param")
+        self.frame_train_model_param.setGeometry(QRect(60, 160, 521, 301))
+        self.frame_train_model_param.setFrameShape(QFrame.NoFrame)
+        self.frame_train_model_param.setFrameShadow(QFrame.Raised)
+
+
+        self.frame_train_model_param.setEnabled(False)
+        self.frame_train_model_param.setVisible(False)
+
+
+
+        self.label_param_1 = QLabel(self.frame_train_model_param)
+        self.label_param_1.setObjectName(u"label_param_1")
+        self.label_param_1.setGeometry(QRect(100, 0, 311, 41))
+        self.verticalLayoutWidget_param_1 = QWidget(self.frame_train_model_param)
+        self.verticalLayoutWidget_param_1.setObjectName(u"verticalLayoutWidget_param_1")
+        self.verticalLayoutWidget_param_1.setGeometry(QRect(90, 50, 451, 161))
+
+        self.epoch_option = QLineEdit()
+        self.epoch_option.setValidator(QIntValidator())
+
+        self.batch_option = QLineEdit()
+        self.batch_option.setValidator(QIntValidator())
+
+        self.gpu_option = QComboBox()
+        self.gpu_option.addItems(["cpu", "gpu"])
+
+        self.model_name_option = QTextEdit()
+
+        self.class_names_option = QTextEdit()
+
+        self.form_param = QFormLayout(self.verticalLayoutWidget_param_1)
+        self.form_param.addRow("Epochs: ", self.epoch_option)
+        self.form_param.addRow("Batch size:", self.batch_option)
+        self.form_param.addRow("Device:", self.gpu_option)
+        self.form_param.addRow("Model name:", self.model_name_option)
+        self.form_param.addRow("Class names :", self.class_names_option)
+
+        self.horizontalLayoutWidget_param_1 = QWidget(self.frame_train_model_param)
+        self.horizontalLayoutWidget_param_1.setObjectName(u"horizontalLayoutWidget_3")
+        self.horizontalLayoutWidget_param_1.setGeometry(QRect(80, 240, 321, 49))
+        self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_param_1)
         self.btn_layout_7.setObjectName(u"btn_layout_7")
         self.btn_layout_7.setContentsMargins(0, 0, 0, 0)
+
+        ################################################
 
 
 
@@ -229,6 +287,7 @@ class Ui_MainPages(object):
         self.frame_train_model.raise_()
         self.frame_save_model.raise_()
         self.frame_test_model.raise_()
+        self.frame_train_model_param.raise_()
 
 
 
@@ -315,6 +374,7 @@ class Ui_MainPages(object):
         self.label_17.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select model </p></body></html>", None))
         self.label_18.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select images</p></body></html>", None))
         
+        self.label_param_1.setText("Training parameters:")
 
         self.label_4.setText(QCoreApplication.translate("MainPages", u"Stream Name A", None))
         self.label_5.setText(QCoreApplication.translate("MainPages", u"Preview Stream", None))

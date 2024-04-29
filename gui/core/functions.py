@@ -24,6 +24,8 @@ from datetime import datetime
 import threading
 import random
 
+import torch
+
 from ultralytics import YOLO
 from yolov8.src.yolo_utils import YOLO8Functions
 from yolov5.src.yolo_utils import YOLO5Functions
@@ -67,6 +69,11 @@ class UtilityFunctions:
 
         except Exception as e:
             print(f"Error: {e}")
+
+
+    def gpu_available():
+        status = torch.cuda.is_available()
+        return status
 
 
 
@@ -119,8 +126,9 @@ class Functions:
         )
 
     
-    def start_training_yolo8(progress_bar):
-        yolo = YOLO8Functions(data_dir=Functions.current_destination_dir)
+    def start_training_yolo8(params, progress_bar):
+        yolo = YOLO8Functions(data_dir=Functions.current_destination_dir,
+                              params = params)
         Functions.yolo = yolo
         t1 = threading.Thread(target=yolo.train)
         t1.start()
@@ -130,8 +138,9 @@ class Functions:
         Functions.save_model_path = yolo.get_custom_model_path()
 
     
-    def start_training_yolo5(progress_bar):
-        yolo = YOLO5Functions(data_dir=Functions.current_destination_dir)
+    def start_training_yolo5(params, progress_bar):
+        yolo = YOLO5Functions(data_dir=Functions.current_destination_dir,
+                              params=params)
 
         Functions.yolo = yolo
 
@@ -143,19 +152,14 @@ class Functions:
         Functions.save_model_path = yolo.get_custom_model_path()
 
 
-    def start_training(setup_window, status):
-        # first two conditions check if the data is uploaded
-        if hasattr(setup_window.btn_next, "src_folder"):
-            if setup_window.btn_next.src_folder:
-                if setup_window.btn_yolo8.isChecked():
-                    Functions.start_training_yolo8(setup_window.circular_bar_train_model)
-                elif setup_window.btn_yolo5.isChecked():
-                    Functions.start_training_yolo5(setup_window.circular_bar_train_model)
-                else:
-                    print(f"SELECT AT LEAST ONE MODEL.")
-            
+    def start_training(setup_window, params, status):
+        if setup_window.btn_yolo8.isChecked():
+            Functions.start_training_yolo8(params, setup_window.circular_bar_train_model)
+        elif setup_window.btn_yolo5.isChecked():
+            Functions.start_training_yolo5(params, setup_window.circular_bar_train_model)
         else:
-            print("No data folder selected.")
+            print(f"SELECT AT LEAST ONE MODEL.")
+
         status[0] = False
         
 
@@ -187,6 +191,33 @@ class Functions:
         return models
 
 
+    def validate_params(setup_window):
+        epochs = setup_window.ui.load_pages.epoch_option.text()
+        batch = setup_window.ui.load_pages.batch_option.text()
+        device = setup_window.ui.load_pages.gpu_option.currentText()
+        if device == "gpu":
+            if not UtilityFunctions.gpu_available():
+                print("No cuda device found.")
+                return None
+            
+            device = "cuda"
+
+        model_name = setup_window.ui.load_pages.model_name_option.toPlainText()
+        class_names = setup_window.ui.load_pages.class_names_option.toPlainText()
+
+        if not all([epochs, batch, model_name, class_names]):
+            print([epochs, batch, model_name, class_names])
+            return None
+        
+        class_names = class_names.split(",")
+
+        params = dict()
+        params["epochs"] = int(epochs)
+        params["batch"] = int(batch)
+        params["device"] = device
+        params["name"] = model_name
+        params["class_names"] = class_names
+        return params
 
 
 

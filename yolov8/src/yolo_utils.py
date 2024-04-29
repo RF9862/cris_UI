@@ -2,6 +2,7 @@ import os
 import random
 from yaml import dump, load
 import shutil
+from datetime import datetime
 import glob
 from yolov8.src import config
 from ultralytics import YOLO
@@ -10,6 +11,7 @@ from ultralytics import YOLO
 
 class YOLO8Functions:
     def __init__(self, data_dir, 
+                 params = None,
                  model_path = config.YOLO8_MODEL_PATH,
                  save_model_dir = config.SAVE_MODEL_PATH,
                  save_predictions_dir = config.SAVE_PREDICTIONS_DIR):
@@ -25,12 +27,21 @@ class YOLO8Functions:
 
         self.save_predictions_dir = save_predictions_dir
 
+        if not params:
+            raise Exception("No parameters found.")
+        else :
+            self.parameters = params
+
+        self.device = params["device"]
+        if self.device == "gpu":
+            self.device = "cuda"
+
         self.split_data_into_train_val()
 
         self.create_custom_yaml_file()
 
         self.load_model()
-        self.define_parameters()
+
 
     def create_custom_yaml_file(self):
         yaml_data = dict()
@@ -39,7 +50,7 @@ class YOLO8Functions:
         yaml_data['train'] = self.train_data_dir
         yaml_data['val'] = self.val_data_dir
 
-        yaml_data['names'] = config.CLASS_NAMES
+        yaml_data['names'] = self.parameters["class_names"]
 
         with open(self.custom_yaml_file_path, "w") as f:
             dump(yaml_data, f)
@@ -48,26 +59,23 @@ class YOLO8Functions:
     def load_model(self):
         self.model = YOLO(self.model_path)
 
-    def define_parameters(self):
-        param = dict()
-
-        param["epochs"] = 1
-        param["batch"] = 8
-        param["name"] = "yolo8_custom"
-
-        self.parameters = param
-
+    
     
     def train(self):
+        self.model = self.model.to(device=self.parameters["device"])
+
+        print(f"\nUsing parameters : \n{self.parameters}")
+
+        t_stamp = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
+
         results = self.model.train(
             data=self.custom_yaml_file_path,
             epochs=self.parameters["epochs"],
             batch=self.parameters["batch"],
-            name=f"{self.save_model_dir}/{self.parameters['name']}"
+            name=f"{self.save_model_dir}/{self.parameters['name']}_yolo8_{t_stamp}"
         )
 
         self.results = results
-
  
 
 

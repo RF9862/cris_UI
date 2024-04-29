@@ -326,15 +326,6 @@ class SetupMainWindow:
         )
         self.ui.load_pages.btn_layout_4.addWidget(self.btn_next)
 
-        
-        def uploadThread():
-            self.ui.load_pages.label_3.hide()
-            self.ui.load_pages.verticalLayoutWidget.show()
-            
-            
-            t1 = threading.Thread(target=Functions.upload_folder, args=(self,))
-            t1.start()
-
 
         self.btn_next.clicked.connect(
             partial(Functions.upload_folder, self)
@@ -367,9 +358,41 @@ class SetupMainWindow:
 
         
         def trainThread():
-            if not training_ongoing[0]:
+            # first two conditions check if the folder is uploaded already
+            if not hasattr(self.btn_next, "src_folder"):
+                print(f"No data uploaded.")
+            elif not self.btn_next.src_folder:
+                print("No data uploaded.") 
+            elif not training_ongoing[0]:  # check if some training process is already going on
+
+                
+                if not self.btn_yolo8.isChecked() and not self.btn_yolo5.isChecked():
+                    print(f"SELECT AT LEAST ONE MODEL.")
+                    return 
+
+                params =  Functions.validate_params(self)
+                if not params:
+                    print("Please specify parameters.")
+                    return
+                
+                
                 training_ongoing[0] = True
-                t1 = threading.Thread(target=Functions.start_training, args=(self,training_ongoing))
+
+                # disable the current parameters frame
+                self.ui.load_pages.frame_train_model_param.setEnabled(False)
+                self.ui.load_pages.frame_train_model_param.setVisible(False)
+
+                # get the number of images
+                files_num = int(len(os.listdir(self.btn_next.src_folder)) / 2)
+                self.ui.load_pages.label_12.setText(f"On {files_num} images")
+
+                # enable the training frame
+                self.ui.load_pages.frame_train_model.setEnabled(True)
+                self.ui.load_pages.frame_train_model.setVisible(True)
+
+                
+                t1 = threading.Thread(target=Functions.start_training, 
+                                      args=(self,params, training_ongoing))
                 t1.start()
             
         self.btn_train.clicked.connect(
@@ -490,14 +513,17 @@ class SetupMainWindow:
             self.ui.load_pages.frame_load_images.setEnabled(False)
             self.ui.load_pages.frame_load_images.setVisible(False)
 
-            self.ui.load_pages.frame_train_model.setEnabled(False)
-            self.ui.load_pages.frame_train_model.setVisible(False)
+            self.ui.load_pages.frame_train_model_param.setEnabled(False)
+            self.ui.load_pages.frame_train_model_param.setVisible(False)
 
             self.ui.load_pages.frame_save_model.setEnabled(False)
             self.ui.load_pages.frame_save_model.setVisible(False)
 
             self.ui.load_pages.frame_test_model.setEnabled(False)
             self.ui.load_pages.frame_test_model.setVisible(False)
+
+            self.ui.load_pages.frame_train_model.setEnabled(False)
+            self.ui.load_pages.frame_train_model.setVisible(False)
 
 
 
@@ -513,8 +539,10 @@ class SetupMainWindow:
         def set_train_model_page():
             clear_frame()
             if self.btn_start_training.isChecked():
-                self.ui.load_pages.frame_train_model.setEnabled(True)
-                self.ui.load_pages.frame_train_model.setVisible(True)
+                #self.ui.load_pages.frame_train_model.setEnabled(True)
+                #self.ui.load_pages.frame_train_model.setVisible(True)
+                self.ui.load_pages.frame_train_model_param.setEnabled(True)
+                self.ui.load_pages.frame_train_model_param.setVisible(True)
 
         self.btn_start_training.clicked.connect(set_train_model_page)
 
