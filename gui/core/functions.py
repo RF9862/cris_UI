@@ -38,6 +38,8 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
 SAVE_PREDICTIONS_DIR = os.path.join(os.getcwd(), "predictions")
 
+CLASS_NAMES = Settings().items["class_names"]
+
 
 class UtilityFunctions:
     
@@ -203,13 +205,12 @@ class Functions:
             device = "cuda"
 
         model_name = setup_window.ui.load_pages.model_name_option.toPlainText()
-        class_names = setup_window.ui.load_pages.class_names_option.toPlainText()
+        class_names = CLASS_NAMES
 
         if not all([epochs, batch, model_name, class_names]):
             print([epochs, batch, model_name, class_names])
             return None
         
-        class_names = class_names.split(",")
 
         params = dict()
         params["epochs"] = int(epochs)

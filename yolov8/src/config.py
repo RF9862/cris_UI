@@ -7,7 +7,7 @@ import shutil
 
 ROOT_DIR = os.getcwd()
 
-USER_DIR = os.getcwd()  # replace it with your path to save models
+USER_DIR = os.getcwd()  # replace it with your dir path to save models
 
 #UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 UPLOAD_DATA_DIR_NAME = "UPLOAD"
@@ -24,6 +24,6 @@ SAVE_MODEL_PATH = os.path.join(ROOT_DIR,  "models")
 
 SAVE_PREDICTIONS_DIR = os.path.join(ROOT_DIR, "yolov8", "predictions")
 
-CLASS_NAMES = ["pothole"]
+
 
 

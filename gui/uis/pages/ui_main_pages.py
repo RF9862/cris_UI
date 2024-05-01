@@ -42,6 +42,7 @@ class Ui_MainPages(object):
         self.frame_2.setFrameShape(QFrame.NoFrame)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.frame_2.setLineWidth(0)
+
         self.frame_load_images = QFrame(self.frame_2)
         self.frame_load_images.setObjectName(u"frame_load_images")
         self.frame_load_images.setGeometry(QRect(60, 160, 521, 301))
@@ -52,18 +53,41 @@ class Ui_MainPages(object):
         self.frame_load_images.setVisible(False)
 
 
-        self.label_3 = QLabel(self.frame_load_images)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(100, 0, 311, 41))
+        
         self.verticalLayoutWidget = QWidget(self.frame_load_images)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(90, 50, 251, 161))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 
+                                                    self.frame_load_images.frameSize().width(), 
+                                                    self.frame_load_images.frameSize().height()))
+        
+        load_img_width = self.verticalLayoutWidget.frameSize().width() / 2
+        x_pos_load_img = load_img_width / 2
+
+        self.label_3 = QLabel(self.verticalLayoutWidget)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(x_pos_load_img, 0, load_img_width, 41))
+
+        self.label_8 = QLabel(self.verticalLayoutWidget)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setGeometry(QRect(x_pos_load_img, 210, load_img_width, 41))
+        self.horizontalLayoutWidget = QWidget(self.frame_load_images)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(x_pos_load_img, 240, load_img_width, 49))
+        self.btn_layout_4 = QHBoxLayout(self.horizontalLayoutWidget)
+        self.btn_layout_4.setObjectName(u"btn_layout_4")
+        self.btn_layout_4.setContentsMargins(0, 0, 0, 0)
+
         self.circular_layout = QVBoxLayout(self.verticalLayoutWidget)
         self.circular_layout.setObjectName(u"circular_layout")
-        self.circular_layout.setContentsMargins(0, 0, 0, 0)
-        self.label_8 = QLabel(self.frame_load_images)
+        self.circular_layout.setContentsMargins(x_pos_load_img+30, 
+                                                self.label_3.frameSize().height(), 0, 
+                                                self.label_8.frameSize().height()+
+                                                self.horizontalLayoutWidget.frameSize().height())
+
+
+        self.label_8 = QLabel(self.verticalLayoutWidget)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(90, 210, 311, 41))
+        self.label_8.setGeometry(QRect(x_pos_load_img, 210, load_img_width, 41))
         self.horizontalLayoutWidget = QWidget(self.frame_load_images)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
         self.horizontalLayoutWidget.setGeometry(QRect(80, 240, 321, 49))
@@ -119,29 +143,41 @@ class Ui_MainPages(object):
         self.frame_train_model.setVisible(False)
 
 
+        self.verticalLayoutWidget_3 = QWidget(self.frame_train_model)
+        self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
+        self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 
+                                                    self.frame_train_model.frameSize().width(), 
+                                                    self.frame_train_model.frameSize().height()))
 
 
+        train_model_width = self.verticalLayoutWidget_3.frameSize().width() /2
+        x_pos_train_model = train_model_width / 2
 
         self.label_11 = QLabel(self.frame_train_model)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(100, 0, 311, 41))
-        self.verticalLayoutWidget_3 = QWidget(self.frame_train_model)
-        self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(90, 50, 251, 161))
-
-
-        self.circular_layout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
-        self.circular_layout_3.setObjectName(u"circular_layout_3")
-        self.circular_layout_3.setContentsMargins(0, 0, 0, 0)
-
+        self.label_11.setGeometry(QRect(x_pos_train_model, 0, train_model_width, 41))
+        self.label_11.setAlignment(Qt.AlignmentFlag.AlignCenter) 
 
 
         self.label_12 = QLabel(self.frame_train_model)
         self.label_12.setObjectName(u"label_12")
-        self.label_12.setGeometry(QRect(90, 210, 311, 41))
-        self.horizontalLayoutWidget_3 = QWidget(self.frame_train_model)
-        self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
-        self.horizontalLayoutWidget_3.setGeometry(QRect(80, 240, 321, 49))
+        self.label_12.setGeometry(QRect(x_pos_train_model, 
+                                        self.frame_train_model.frameSize().height() - 42, 
+                                        train_model_width, 41))
+        self.label_12.setAlignment(Qt.AlignmentFlag.AlignCenter) 
+
+
+        self.circular_layout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
+        self.circular_layout_3.setObjectName(u"circular_layout_3")
+        self.circular_layout_3.setContentsMargins(x_pos_load_img+30, 
+                                                self.label_11.frameSize().height()+5, 0, 
+                                                self.label_12.frameSize().height()+5)
+
+
+
+        #self.horizontalLayoutWidget_3 = QWidget(self.frame_train_model)
+        #self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
+        #self.horizontalLayoutWidget_3.setGeometry(QRect(80, 240, 321, 49))
 
         #self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_3)
         #self.btn_layout_7.setObjectName(u"btn_layout_7")
@@ -172,26 +208,29 @@ class Ui_MainPages(object):
 
         self.epoch_option = QLineEdit()
         self.epoch_option.setValidator(QIntValidator())
+        self.epoch_option.setText("3")
 
         self.batch_option = QLineEdit()
         self.batch_option.setValidator(QIntValidator())
+        self.batch_option.setText("8")
 
         self.gpu_option = QComboBox()
         self.gpu_option.addItems(["cpu", "gpu"])
 
         self.model_name_option = QTextEdit()
+        self.model_name_option.setText("custom_model")
 
-        self.class_names_option = QTextEdit()
+        #self.class_names_option = QTextEdit()
 
         self.form_param = QFormLayout(self.verticalLayoutWidget_param_1)
         self.form_param.addRow("Epochs: ", self.epoch_option)
         self.form_param.addRow("Batch size:", self.batch_option)
         self.form_param.addRow("Device:", self.gpu_option)
         self.form_param.addRow("Model name:", self.model_name_option)
-        self.form_param.addRow("Class names :", self.class_names_option)
+        #self.form_param.addRow("Class names :", self.class_names_option)
 
         self.horizontalLayoutWidget_param_1 = QWidget(self.frame_train_model_param)
-        self.horizontalLayoutWidget_param_1.setObjectName(u"horizontalLayoutWidget_3")
+        self.horizontalLayoutWidget_param_1.setObjectName(u"horizontalLayoutWidget_param_1")
         self.horizontalLayoutWidget_param_1.setGeometry(QRect(80, 240, 321, 49))
         self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_param_1)
         self.btn_layout_7.setObjectName(u"btn_layout_7")

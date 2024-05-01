@@ -6,6 +6,7 @@
     "theme_name" : "default",
     "custom_title_bar": true,
     "upload_dir_name" : "UPLOAD",
+    "class_names" : ["some_name"],
     "startup_size": [
         1400,
         720

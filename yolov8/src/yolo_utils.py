@@ -21,7 +21,8 @@ class YOLO8Functions:
 
         self.model_path = model_path
 
-        self.save_model_dir = os.path.join(save_model_dir, os.path.basename(self.data_dir))
+        #self.save_model_dir = os.path.join(save_model_dir, os.path.basename(self.data_dir))
+        self.save_model_dir = save_model_dir
 
         self.custom_yaml_file_path = config.CUSTOM_YAML_PATH
 

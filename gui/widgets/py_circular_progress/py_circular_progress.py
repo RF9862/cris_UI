@@ -85,7 +85,7 @@ class PyCircularProgress(QWidget):
         paint.setFont(QFont(self.font_family, self.font_size))
 
         # CREATE RECTANGLE
-        rect = QRect(0, 0, self.width()/1.5, self.height())
+        rect = QRect(0, 0, self.width()/2, self.height())
         paint.setPen(Qt.NoPen)
 
         # PEN
