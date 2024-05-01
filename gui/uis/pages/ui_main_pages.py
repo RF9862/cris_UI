@@ -305,7 +305,7 @@ class Ui_MainPages(object):
 
         self.label_18 = QLabel(self.frame_test_model)
         self.label_18.setObjectName(u"label_18")
-        self.label_18.setGeometry(QRect(90, 210, 311, 41))
+        self.label_18.setGeometry(QRect(90, 210, 381, 41))
         self.horizontalLayoutWidget_5 = QWidget(self.frame_test_model)
         self.horizontalLayoutWidget_5.setObjectName(u"horizontalLayoutWidget_5")
         self.horizontalLayoutWidget_5.setGeometry(QRect(80, 240, 321, 49))
@@ -420,7 +420,7 @@ class Ui_MainPages(object):
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>path here.</p></body></html>", None))
         
         self.label_17.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select model </p></body></html>", None))
-        self.label_18.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select images</p></body></html>", None))
+        self.label_18.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select images(.jpg) or video(.mp4)</p></body></html>", None))
         
         self.label_param_1.setText("Training parameters:")
 
