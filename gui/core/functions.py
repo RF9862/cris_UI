@@ -23,13 +23,15 @@ import glob
 from datetime import datetime
 import threading
 import random
+import cv2
 
 import torch
+import mimetypes
 
 from ultralytics import YOLO
 from yolov8.src.yolo_utils import YOLO8Functions
 from yolov5.src.yolo_utils import YOLO5Functions
-from yolov8.src.config import SAVE_MODEL_PATH
+#from yolov8.src.config import SAVE_MODEL_PATH
 
 from gui.core.json_settings import Settings
 
@@ -39,6 +41,8 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 SAVE_PREDICTIONS_DIR = os.path.join(os.getcwd(), "predictions")
 
 CLASS_NAMES = Settings().items["class_names"]
+
+SAVE_MODEL_PATH = os.path.join(os.getcwd(), "models")
 
 
 class UtilityFunctions:
@@ -76,6 +80,20 @@ class UtilityFunctions:
     def gpu_available():
         status = torch.cuda.is_available()
         return status
+    
+
+    def is_video_file(path):
+        return mimetypes.guess_type(path)[0].startswith("video/")
+
+    def is_image_file(path):
+        return mimetypes.guess_type(path)[0].startswith("image/")
+    
+    def get_available_models(save_models_dir = SAVE_MODEL_PATH):
+        #pattern = os.path.join(save_models_dir, "**", "best.pt")
+        pattern = "best.pt"
+        pt_files  = glob.glob(pattern, recursive=True)
+        return pt_files
+
 
 
 
@@ -183,6 +201,55 @@ class Functions:
 
         print(f"Prediction results saved to : {Functions.save_predictions_dir}")
         return save_path
+    
+
+    def predict_video(video_path, selected_model_path):
+
+        model = YOLO(selected_model_path)
+
+        os.makedirs(Functions.save_predictions_dir, exist_ok=True)
+
+        cap = cv2.VideoCapture(video_path)
+
+        # Get the video frame properties
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+
+        # Define the codec and create a VideoWriter object
+        output_video_path = os.path.join(Functions.save_predictions_dir, os.path.basename(video_path))
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Define the codec (adjust as needed)
+        out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))
+
+
+        # Loop through the video frames
+        while cap.isOpened():
+            # Read a frame from the video
+            success, frame = cap.read()
+
+            if success:
+                # Run YOLOv8 tracking on the frame, persisting tracks between frames
+                results = model.track(frame, persist=True)
+
+                # Visualize the results on the frame
+                annotated_frame = results[0].plot()
+
+                # Convert annotated frame from matplotlib to OpenCV format
+                annotated_frame = cv2.cvtColor(annotated_frame, cv2.COLOR_RGB2BGR)
+
+                # Write the annotated frame to the output video
+                out.write(annotated_frame)
+            else:
+                # Break the loop if the end of the video is reached
+                break
+
+        # Release the video capture object, VideoWriter, and close the display window
+        cap.release()
+        out.release()
+
+        # Print a message when video processing is complete
+        print(f"Annotated video saved to: {output_video_path}")
+        return output_video_path
     
 
     def get_available_models():

@@ -11,3 +11,4 @@ yolo/
 UPLOAD/
 assets/
 **/predictions/
+models/

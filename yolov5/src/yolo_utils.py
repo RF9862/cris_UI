@@ -6,6 +6,7 @@ from datetime import datetime
 import glob
 from yolov5.src import config
 from ultralytics import YOLO
+import cv2
 
 
 
@@ -88,6 +89,53 @@ class YOLO5Functions:
 
         print(f"Prediction results saved to : {self.save_predictions_dir}")
         return save_path
+    
+
+    def predict_video(self, video_path):
+        os.makedirs(self.save_predictions_dir, exist_ok=True)
+
+        cap = cv2.VideoCapture(video_path)
+
+        # Get the video frame properties
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+
+        # Define the codec and create a VideoWriter object
+        output_video_path = os.path.join(self.save_predictions_dir, os.path.basename(video_path))
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Define the codec (adjust as needed)
+        out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))
+
+
+        # Loop through the video frames
+        while cap.isOpened():
+            # Read a frame from the video
+            success, frame = cap.read()
+
+            if success:
+                # Run YOLOv8 tracking on the frame, persisting tracks between frames
+                results = self.model.track(frame, persist=True)
+
+                # Visualize the results on the frame
+                annotated_frame = results[0].plot()
+
+                # Convert annotated frame from matplotlib to OpenCV format
+                annotated_frame = cv2.cvtColor(annotated_frame, cv2.COLOR_RGB2BGR)
+
+                # Write the annotated frame to the output video
+                out.write(annotated_frame)
+            else:
+                # Break the loop if the end of the video is reached
+                break
+
+        # Release the video capture object, VideoWriter, and close the display window
+        cap.release()
+        out.release()
+
+        # Print a message when video processing is complete
+        print(f"Annotated video saved to: {output_video_path}")
+        return output_video_path
+
     
 
     

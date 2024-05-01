@@ -25,6 +25,7 @@ from functools import partial
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
+from PySide6.QtMultimedia import QMediaPlayer
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
@@ -47,6 +48,7 @@ from . ui_main import *
 # MAIN FUNCTIONS 
 # ///////////////////////////////////////////////////////////////
 from . functions_main_window import *
+from gui.core.functions import UtilityFunctions
 
 
 
@@ -475,18 +477,54 @@ class SetupMainWindow:
         )
         self.ui.load_pages.btn_layout_9.addWidget(self.btn_test_submit)
 
-        def predict_image():
-            files = self.btn_upload_test.files
-            selected_model = self.ui.load_pages.select_models_list.currentText()
-            print(selected_model)
-            save_file = Functions.predict_image_yolo(files[0], selected_model)
+        def predict_image(save_file, selected_model):
+            self.ui.load_pages.graphicsView1_video.setEnabled(False)
+            self.ui.load_pages.graphicsView1_video.setVisible(False)
+            
+            self.ui.load_pages.graphicsView1.setEnabled(True)
+            self.ui.load_pages.graphicsView1.setVisible(True)
+
+            save_file = Functions.predict_image_yolo(save_file, selected_model)
             print(save_file)
+
             
             pixmap = QPixmap(save_file)
             self.ui.load_pages.graphicsView1.setPixmap(pixmap)
             self.ui.load_pages.graphicsView1.show()
 
-        self.btn_test_submit.clicked.connect(predict_image)
+
+        def predict_video_stream(save_file, selected_model):
+
+            self.ui.load_pages.graphicsView1.setEnabled(False)
+            self.ui.load_pages.graphicsView1.setVisible(False)
+
+            self.ui.load_pages.graphicsView1_video.setEnabled(True)
+            self.ui.load_pages.graphicsView1_video.setVisible(True)
+
+            save_file = Functions.predict_video(save_file, selected_model)
+            print(save_file)
+
+            self.mediaPlayer = QMediaPlayer()
+            self.mediaPlayer.setSource(QUrl.fromLocalFile(save_file))
+            self.mediaPlayer.setVideoOutput(self.ui.load_pages.graphicsView1_video)
+            self.mediaPlayer.play()
+
+        def predict_file():
+            files = self.btn_upload_test.files
+            selected_model = self.ui.load_pages.select_models_list.currentText()
+            print(selected_model)
+            
+            file_path = files[0]
+            if UtilityFunctions.is_video_file(file_path):
+                predict_video_stream(file_path, selected_model)
+            elif UtilityFunctions.is_image_file(file_path):
+                predict_image(file_path, selected_model)
+            else:
+                print(f"File format is not supported:{file_path}")
+
+
+
+        self.btn_test_submit.clicked.connect(predict_file)
 
 
         ##################################################################

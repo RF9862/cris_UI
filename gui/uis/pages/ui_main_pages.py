@@ -9,6 +9,7 @@
 ################################################################################
 
 from qt_core import *
+from PySide6.QtMultimediaWidgets import QVideoWidget
 
 
 class Ui_MainPages(object):
@@ -334,8 +335,16 @@ class Ui_MainPages(object):
         self.graphicsView1.setObjectName(u"graphicsView1")
         self.graphicsView1.setGeometry(QRect(640, 100, 256, 192))
         self.graphicsView1.setFrameShape(QFrame.NoFrame)
-
         self.graphicsView1.setScaledContents(True)
+        self.graphicsView1.setEnabled(False)
+        self.graphicsView1.setVisible(False)
+
+
+        self.graphicsView1_video = QVideoWidget(self.frame)
+        self.graphicsView1_video.setObjectName(u"graphicsView1_video")
+        self.graphicsView1_video.setGeometry(QRect(640, 100, 256, 192))
+        self.graphicsView1_video.setEnabled(False)
+        self.graphicsView1_video.setVisible(False)
 
 
         self.graphicsView2 = QLabel(self.frame)
