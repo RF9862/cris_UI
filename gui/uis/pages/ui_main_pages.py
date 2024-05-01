@@ -413,7 +413,7 @@ class Ui_MainPages(object):
         self.label_2.setText(QCoreApplication.translate("MainPages", u"Select stream", None))
         self.groupBox_1.setTitle("")
         self.groupBox_2.setTitle("")
-        self.label_11.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Training started for YOLO5</p></body></html>", None))
+        self.label_11.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Training started for YOLO</p></body></html>", None))
         self.label_12.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>On 250 images</p></body></html>", None))
         self.label_13.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>The trained model's path is given below:</p></body></html>", None))
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Drag and Drop or Select images</p></body></html>", None))

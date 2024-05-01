@@ -16,12 +16,14 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
 SPLIT_RATIO = 0.8
 
-CUSTOM_YAML_PATH = os.path.join(ROOT_DIR, "yolov5", "data.yaml")
+CUSTOM_YAML_PATH = os.path.join(ROOT_DIR, "yolo_src", "data.yaml")
 
-YOLO8_MODEL_PATH = os.path.join(ROOT_DIR, "yolov5", "yolov5s.pt") # yolov8/yolov8n.pt
+YOLO8_MODEL_PATH = os.path.join(ROOT_DIR, "yolov8", "yolov8n.pt") 
+
+YOLO5_MODEL_PATH = os.path.join(ROOT_DIR, "yolov5", "yolov5s.pt") 
 
 SAVE_MODEL_PATH = os.path.join(ROOT_DIR,  "models")
 
-SAVE_PREDICTIONS_DIR = os.path.join(ROOT_DIR, "yolov5", "predictions")
+SAVE_PREDICTIONS_DIR = os.path.join(ROOT_DIR, "predictions")
 
 

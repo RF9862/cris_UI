@@ -29,8 +29,7 @@ import torch
 import mimetypes
 
 from ultralytics import YOLO
-from yolov8.src.yolo_utils import YOLO8Functions
-from yolov5.src.yolo_utils import YOLO5Functions
+from yolo_src.yolo_utils import YOLOFunctions
 #from yolov8.src.config import SAVE_MODEL_PATH
 
 from gui.core.json_settings import Settings
@@ -89,8 +88,7 @@ class UtilityFunctions:
         return mimetypes.guess_type(path)[0].startswith("image/")
     
     def get_available_models(save_models_dir = SAVE_MODEL_PATH):
-        #pattern = os.path.join(save_models_dir, "**", "best.pt")
-        pattern = "best.pt"
+        pattern = os.path.join(save_models_dir, "**", "best.pt")
         pt_files  = glob.glob(pattern, recursive=True)
         return pt_files
 
@@ -145,21 +143,10 @@ class Functions:
             progress_bar=setup_window.circular_bar_load_img
         )
 
-    
-    def start_training_yolo8(params, progress_bar):
-        yolo = YOLO8Functions(data_dir=Functions.current_destination_dir,
-                              params = params)
-        Functions.yolo = yolo
-        t1 = threading.Thread(target=yolo.train)
-        t1.start()
-        while t1.is_alive():
-            yolo.check_status(progress_bar)
-            time.sleep(1)
-        Functions.save_model_path = yolo.get_custom_model_path()
 
-    
-    def start_training_yolo5(params, progress_bar):
-        yolo = YOLO5Functions(data_dir=Functions.current_destination_dir,
+    def start_training_yolo(yolo_version, params, progress_bar):
+        yolo = YOLOFunctions(data_dir=Functions.current_destination_dir,
+                              yolo_version=yolo_version,
                               params=params)
 
         Functions.yolo = yolo
@@ -174,9 +161,9 @@ class Functions:
 
     def start_training(setup_window, params, status):
         if setup_window.btn_yolo8.isChecked():
-            Functions.start_training_yolo8(params, setup_window.circular_bar_train_model)
+            Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model)
         elif setup_window.btn_yolo5.isChecked():
-            Functions.start_training_yolo5(params, setup_window.circular_bar_train_model)
+            Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
         else:
             print(f"SELECT AT LEAST ONE MODEL.")
 
@@ -251,13 +238,6 @@ class Functions:
         print(f"Annotated video saved to: {output_video_path}")
         return output_video_path
     
-
-    def get_available_models():
-        models = list()
-        models5 = YOLO5Functions.get_available_models()
-        models8 = YOLO8Functions.get_available_models()
-        models = models5 + models8
-        return models
 
 
     def validate_params(setup_window):

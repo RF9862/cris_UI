@@ -444,7 +444,7 @@ class SetupMainWindow:
         )
         self.ui.load_pages.btn_layout_20.addWidget(self.btn_refresh_models)
         def refresh_models():
-            models = Functions.get_available_models()
+            models = UtilityFunctions.get_available_models()
             self.ui.load_pages.select_models_list.addItems(models)
         self.btn_refresh_models.clicked.connect(refresh_models)
 
