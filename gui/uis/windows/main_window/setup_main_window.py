@@ -446,7 +446,8 @@ class SetupMainWindow:
                 f.write(f"Model Name: {model_name}\n")
                 f.write(f"Location: [{str(g.latlng[0]), str(g.latlng[1])}]\n")
                 f.write(f"Time: {str(now)}\n")
-            self.ui.load_pages.label_13.setText(f"{model_name}_cris file has been saved.")
+            self.ui.load_pages.label_13.setText(f"{model_name}_cris file has been saved")
+            print(cris_path)
             print(g.latlng)
         self.btn_show_path.clicked.connect(save_cris_file)
 
@@ -501,14 +502,43 @@ class SetupMainWindow:
             circular_progress_bar=self.circular_bar_test_model
         )
         self.ui.load_pages.btn_layout_9.addWidget(self.btn_upload_test)
-        def show_image():
-            show_file = self.btn_upload_test.files[0]
+
+        def show_image(show_file):
+            self.ui.load_pages.graphicsView1_video.setVisible(False)
+            self.ui.load_pages.graphicsView1_video.setEnabled(False)
+
+            self.ui.load_pages.graphicsView1.setVisible(True)
+            self.ui.load_pages.graphicsView1.setEnabled(True)
+            
             pixmap = QPixmap(show_file)
             # pixmap.scaled(128, 128, Qt.KeepAspectRatio)
             self.ui.load_pages.graphicsView1.setPixmap(pixmap)
             self.ui.load_pages.graphicsView1.show()       
+        
+        def show_video(show_file):
+            self.ui.load_pages.graphicsView1.setVisible(False)
+            self.ui.load_pages.graphicsView1.setEnabled(False)
 
-        self.btn_upload_test.clicked.connect(show_image) 
+            self.ui.load_pages.graphicsView1_video.setVisible(True)
+            self.ui.load_pages.graphicsView1_video.setEnabled(True)
+
+            self.mediaPlayer = QMediaPlayer()
+            self.mediaPlayer.setSource(QUrl.fromLocalFile(show_file))
+            self.mediaPlayer.setVideoOutput(self.ui.load_pages.graphicsView1_video)
+            
+            self.mediaPlayer.play()
+
+        def show_input():
+            show_file = self.btn_upload_test.files[0]
+            if UtilityFunctions.is_image_file(show_file):
+                show_image(show_file)
+            elif UtilityFunctions.is_video_file(show_file):
+                show_video(show_file)
+            else:
+                print(f"File format is not supported:{show_file}")
+
+
+        self.btn_upload_test.clicked.connect(show_input) 
 
         #### predict button
 

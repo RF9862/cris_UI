@@ -89,7 +89,7 @@ class UtilityFunctions:
     
     def get_available_models(save_models_dir = SAVE_MODEL_PATH):
         CRISPATH = f"C:/Users/{getpass.getuser()}/.cris/model"
-        pt_files = [f for f in os.listdir(CRISPATH) if (f.split('.')[-1].lower() in ['pt'])]        
+        pt_files = [f for f in os.listdir(CRISPATH) if (f.split('.')[-1].lower() in ['pt'])]       
         # pattern = os.path.join(save_models_dir, "**", "best.pt")
         # pt_files  = glob.glob(pattern, recursive=True)
         return pt_files
