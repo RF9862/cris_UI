@@ -351,6 +351,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
+            deactive=True,
         )
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
 
