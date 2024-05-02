@@ -1,0 +1,14 @@
+**/__pycache__/
+.vscode/
+.git/
+.pyc
+**/test.ipynb
+
+**/*.cache
+**/data.yaml
+yolo/
+**/runs/
+UPLOAD/
+assets/
+**/predictions/
+models/
