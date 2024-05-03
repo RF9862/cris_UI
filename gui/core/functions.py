@@ -42,12 +42,29 @@ DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
 SAVE_PREDICTIONS_DIR = os.path.join(os.getcwd(), "predictions")
 
-CLASS_NAMES = Settings().items["class_names"]
 
 SAVE_MODEL_PATH = os.path.join(os.getcwd(), "models")
 
+IMG_FILES_NAME = "images"
+LABEL_FILES_NAME = "labels"
+CLASSES_FILE_NAME = "classes.txt"
+
+
 class UtilityFunctions:
     
+    def extract_class_names(file_path):
+        class_names = []
+        try:
+            with open(file_path, 'r') as file:
+                for line in file:
+                    class_name = line.strip()
+                    if class_name:  
+                        class_names.append(class_name)
+        except FileNotFoundError:
+            print(f"Error: File '{file_path}' not found.")
+        return class_names
+
+
 
     def copy_dir(source_folder , progress_bar=None, destination_folder=DESTINATION_DIR):
         
@@ -56,15 +73,27 @@ class UtilityFunctions:
         os.makedirs(DIR_path, exist_ok=True)
 
         Functions.current_destination_dir = DIR_path
+        # source dir contains 2 dir : images/ and labels/ and 1 file: classes.txt
         try:
 
-            file_names = os.listdir(source_folder)
+            source_img_folder = os.path.join(source_folder,IMG_FILES_NAME)
+            source_label_folder = os.path.join(source_folder, LABEL_FILES_NAME)
+
+            img_file_names = [os.path.join(source_img_folder, n) for n in os.listdir(source_img_folder)]
+            label_file_names = [os.path.join(source_label_folder, n) for n in  os.listdir(source_label_folder)]
+
+            classes_file = os.path.join(source_folder, CLASSES_FILE_NAME)
+
+            Functions.CLASS_NAMES = UtilityFunctions.extract_class_names(classes_file)
+            print(Functions.CLASS_NAMES)
+
+            file_names = img_file_names + label_file_names
 
             total_size = len(file_names)
 
             for i, file_name in enumerate(file_names):
                 src_file = os.path.join(source_folder, file_name)
-                dst_file = os.path.join(Functions.current_destination_dir, file_name)
+                dst_file = os.path.join(Functions.current_destination_dir, os.path.basename(file_name))
                 # Copy the entire folder recursively
                 shutil.copyfile(src_file, dst_file)
 
@@ -75,11 +104,12 @@ class UtilityFunctions:
             print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
 
         except Exception as e:
-            print(f"Error: {e}")
+            raise e
 
 
     def gpu_available():
         status = torch.cuda.is_available()
+        print(status)
         return status
     
 
@@ -89,11 +119,11 @@ class UtilityFunctions:
     def is_image_file(path):
         return mimetypes.guess_type(path)[0].startswith("image/")
     
-    def get_available_models(save_models_dir = SAVE_MODEL_PATH):
+    def get_available_models(save_models_dir = CRIS_MODEL):
         # CRISPATH = f"C:/Users/{getpass.getuser()}/.cris/model"
-        pt_files = [f for f in os.listdir(CRIS_MODEL) if (f.split('.')[-1].lower() in ['pt'])]       
-        # pattern = os.path.join(save_models_dir, "**", "best.pt")
-        # pt_files  = glob.glob(pattern, recursive=True)
+        #pt_files = [f for f in os.listdir(CRIS_MODEL) if (f.split('.')[-1].lower() in ['pt'])]       
+        pattern = os.path.join(save_models_dir, "**", "best.pt")
+        pt_files  = glob.glob(pattern, recursive=True)
         return pt_files
 
 
@@ -267,7 +297,7 @@ class Functions:
             device = "cuda"
 
         model_name = setup_window.ui.load_pages.model_name_option.toPlainText()
-        class_names = CLASS_NAMES
+        class_names = Functions.CLASS_NAMES
 
         if not all([epochs, batch, model_name, class_names]):
             print([epochs, batch, model_name, class_names])

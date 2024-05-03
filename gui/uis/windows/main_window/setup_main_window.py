@@ -592,7 +592,8 @@ class SetupMainWindow:
         def predict_file():
             files = self.btn_upload_test.files
             # selected_model = self.combo_list.currentText()
-            selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
+            #selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
+            selected_model =  self.combo_list.currentText()
             print(selected_model)
             
             file_path = files[0]
