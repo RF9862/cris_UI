@@ -153,6 +153,14 @@ class YOLOFunctions:
         train_dir = os.path.join(self.data_dir, "train")
         val_dir = os.path.join(self.data_dir, "val")
 
+        if os.path.exists(train_dir) and os.path.exists(val_dir):
+            self.train_data_dir = train_dir
+            self.val_data_dir = val_dir
+            print(f"Train and val split already exists:\
+                  \nTrain: {self.train_data_dir}\
+                  \n Val : {self.val_data_dir}")
+            return
+
 
         file_names = [os.path.basename(fname).split(".")[0] for fname in os.listdir(self.data_dir)]
         file_names = list(set(file_names))

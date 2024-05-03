@@ -149,7 +149,7 @@ class Ui_MainPages(object):
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
         self.verticalLayoutWidget_3.setGeometry(QRect(0, 0, 
                                                     self.frame_train_model.frameSize().width(), 
-                                                    self.frame_train_model.frameSize().height()))
+                                                    self.frame_train_model.frameSize().height()-20))
         self.verticalLayoutWidget_3.hide()
 
 
@@ -180,13 +180,13 @@ class Ui_MainPages(object):
 
 
 
-        #self.horizontalLayoutWidget_3 = QWidget(self.frame_train_model)
-        #self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
-        #self.horizontalLayoutWidget_3.setGeometry(QRect(80, 240, 321, 49))
+        self.horizontalLayoutWidget_3_train = QWidget(self.frame_train_model)
+        self.horizontalLayoutWidget_3_train.setObjectName(u"horizontalLayoutWidget_3_train")
+        self.horizontalLayoutWidget_3_train.setGeometry(QRect(80, 240, 321, 49))
 
-        #self.btn_layout_7 = QHBoxLayout(self.horizontalLayoutWidget_3)
-        #self.btn_layout_7.setObjectName(u"btn_layout_7")
-        #self.btn_layout_7.setContentsMargins(0, 0, 0, 0)
+        self.btn_layout_7_train = QHBoxLayout(self.horizontalLayoutWidget_3_train)
+        self.btn_layout_7_train.setObjectName(u"btn_layout_7")
+        self.btn_layout_7_train.setContentsMargins(0, 0, 0, 0)
 
 
         ###############################################

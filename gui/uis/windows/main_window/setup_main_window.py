@@ -367,6 +367,7 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
         )
+        
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
 
         
@@ -399,9 +400,15 @@ class SetupMainWindow:
                 
                 training_ongoing[0] = True
 
+
+                self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_back_train)
+                self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_train)
+                
+
                 # disable the current parameters frame
                 self.ui.load_pages.frame_train_model_param.setEnabled(False)
                 self.ui.load_pages.frame_train_model_param.setVisible(False)
+
 
                 # get the number of images
                 files_num = int(len(os.listdir(self.btn_next.src_folder)) / 2)
@@ -656,13 +663,36 @@ class SetupMainWindow:
         self.btn_load_images.clicked.connect(set_load_images_page)
 
 
+        def show_training_frame():
+            self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_back_train)
+            self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_train)
+            
+
+            # disable the current parameters frame
+            self.ui.load_pages.frame_train_model_param.setEnabled(False)
+            self.ui.load_pages.frame_train_model_param.setVisible(False)
+
+
+            # get the number of images
+            files_num = int(len(os.listdir(self.btn_next.src_folder)) / 2)
+            self.ui.load_pages.label_12.setText(f"On {files_num} images")
+
+            # enable the training frame
+            #self.ui.load_pages.frame_train_model.setEnabled(True)
+            self.ui.load_pages.frame_train_model.setVisible(True)
+
         def set_train_model_page():
             clear_frame()
-            if self.btn_start_training.isChecked():
-                #self.ui.load_pages.frame_train_model.setEnabled(True)
-                #self.ui.load_pages.frame_train_model.setVisible(True)
-                self.ui.load_pages.frame_train_model_param.setEnabled(True)
-                self.ui.load_pages.frame_train_model_param.setVisible(True)
+            if not training_ongoing[0]:
+                if self.btn_start_training.isChecked():
+                    #self.ui.load_pages.frame_train_model.setEnabled(True)
+                    #self.ui.load_pages.frame_train_model.setVisible(True)
+                    self.ui.load_pages.btn_layout_7.addWidget(self.btn_back_train)
+                    self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
+                    self.ui.load_pages.frame_train_model_param.setEnabled(True)
+                    self.ui.load_pages.frame_train_model_param.setVisible(True)
+            else:
+                show_training_frame()
 
         self.btn_start_training.clicked.connect(set_train_model_page)
 

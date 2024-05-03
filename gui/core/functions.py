@@ -198,17 +198,21 @@ class Functions:
 
 
     def start_training(setup_window, params, status):
-        if setup_window.btn_yolo8.isChecked():
-            Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model)
-        elif setup_window.btn_yolo5.isChecked():
-            Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
-        else:
-            print(f"SELECT AT LEAST ONE MODEL.")
-            setup_window.ui.load_pages.label_11.show()
-            setup_window.ui.load_pages.label_11.setText("SELECT AT LEAST ONE MODEL.")
-            setup_window.ui.load_pages.verticalLayoutWidget_3.hide()              
+        try:
+            if setup_window.btn_yolo8.isChecked():
+                Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model)
+            elif setup_window.btn_yolo5.isChecked():
+                Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
+            else:
+                print(f"SELECT AT LEAST ONE MODEL.")
+                setup_window.ui.load_pages.label_11.show()
+                setup_window.ui.load_pages.label_11.setText("SELECT AT LEAST ONE MODEL.")
+                setup_window.ui.load_pages.verticalLayoutWidget_3.hide()              
 
-        status[0] = False
+            status[0] = False
+        except Exception as e:
+            status[0] = False
+            raise e
         
 
 
