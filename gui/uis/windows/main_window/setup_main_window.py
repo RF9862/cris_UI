@@ -52,7 +52,10 @@ from . functions_main_window import *
 from gui.core.functions import UtilityFunctions
 
 
+current_directory = os.getcwd()
 
+sys.path.insert(0, current_directory)
+from constants import *
 
 uploading_ongoing = [False]
 training_ongoing = [False]
@@ -440,7 +443,7 @@ class SetupMainWindow:
             import geocoder
             model_name = self.ui.load_pages.model_name_option.toPlainText()
             g = geocoder.ip('me')
-            cris_path = os.path.join(f"C:/Users/{getpass.getuser()}/.cris/cris", model_name+".cris")
+            cris_path = os.path.join(CRISPATH_LOC, model_name+".cris")
             now = datetime.datetime.now()
             with open(cris_path, 'w') as f:
                 f.write(f"Model Name: {model_name}\n")
@@ -559,8 +562,8 @@ class SetupMainWindow:
             self.ui.load_pages.graphicsView1.setEnabled(True)
             self.ui.load_pages.graphicsView1.setVisible(True)
 
-            # save_file = Functions.predict_image_yolo(save_file, selected_model)
-            save_file = Functions.detect_yolo5(save_file, selected_model)
+            save_file = Functions.predict_image_yolo(save_file, selected_model)
+            # save_file = Functions.detect_yolo5(save_file, selected_model)
             
             print(save_file)
 
@@ -589,7 +592,7 @@ class SetupMainWindow:
         def predict_file():
             files = self.btn_upload_test.files
             # selected_model = self.combo_list.currentText()
-            selected_model = os.path.join(f"C:/Users/{getpass.getuser()}/.cris/model", self.combo_list.currentText())
+            selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
             print(selected_model)
             
             file_path = files[0]

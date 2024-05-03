@@ -16,7 +16,7 @@
 
 # IMPORT PACKAGES AND MODULES
 # ///////////////////////////////////////////////////////////////
-import os, getpass
+import os, sys
 import shutil
 import time
 import glob
@@ -33,7 +33,10 @@ from yolo_src.yolo_utils import YOLOFunctions
 #from yolov8.src.config import SAVE_MODEL_PATH
 from yolov5.detect import run as y5_detect
 from gui.core.json_settings import Settings
+current_directory = os.getcwd()
 
+sys.path.insert(0, current_directory)
+from constants import CRIS_MODEL
 UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
@@ -42,7 +45,6 @@ SAVE_PREDICTIONS_DIR = os.path.join(os.getcwd(), "predictions")
 CLASS_NAMES = Settings().items["class_names"]
 
 SAVE_MODEL_PATH = os.path.join(os.getcwd(), "models")
-
 
 class UtilityFunctions:
     
@@ -88,8 +90,8 @@ class UtilityFunctions:
         return mimetypes.guess_type(path)[0].startswith("image/")
     
     def get_available_models(save_models_dir = SAVE_MODEL_PATH):
-        CRISPATH = f"C:/Users/{getpass.getuser()}/.cris/model"
-        pt_files = [f for f in os.listdir(CRISPATH) if (f.split('.')[-1].lower() in ['pt'])]       
+        # CRISPATH = f"C:/Users/{getpass.getuser()}/.cris/model"
+        pt_files = [f for f in os.listdir(CRIS_MODEL) if (f.split('.')[-1].lower() in ['pt'])]       
         # pattern = os.path.join(save_models_dir, "**", "best.pt")
         # pt_files  = glob.glob(pattern, recursive=True)
         return pt_files

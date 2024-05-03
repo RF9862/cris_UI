@@ -37,7 +37,8 @@ from gui.uis.windows.main_window import *
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
 
-import getpass
+from constants import *
+
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
 os.environ["QT_FONT_DPI"] = "96"
@@ -50,9 +51,7 @@ UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 os.makedirs(DESTINATION_DIR, exist_ok=True)
 
-CRISPATH = f"C:/Users/{getpass.getuser()}/.cris"
-CRIS_MODEL = f"C:/Users/{getpass.getuser()}/.cris/model"
-CRISPATH_LOC = f"C:/Users/{getpass.getuser()}/.cris/cris"
+
 
 os.makedirs(CRISPATH, exist_ok=True)
 os.makedirs(CRIS_MODEL, exist_ok=True)

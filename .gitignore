@@ -12,3 +12,4 @@ UPLOAD/
 assets/
 **/predictions/
 models/
+cris_weights/
