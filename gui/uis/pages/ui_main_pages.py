@@ -344,11 +344,37 @@ class Ui_MainPages(object):
         self.graphicsView1.setVisible(False)
 
 
-        self.graphicsView1_video = QVideoWidget(self.frame)
-        self.graphicsView1_video.setObjectName(u"graphicsView1_video")
-        self.graphicsView1_video.setGeometry(QRect(640, 100, 256, 192))
-        self.graphicsView1_video.setEnabled(False)
-        self.graphicsView1_video.setVisible(False)
+        #####################################
+
+
+        self.video_frame = QFrame(self.frame)
+        self.video_frame.setGeometry(QRect(640, 100, 256, 192))
+
+
+        ####################################
+
+
+
+        self.graphicsView4 = QLabel(self.frame)
+        self.graphicsView4.setObjectName(u"graphicsView4")
+        self.graphicsView4.setGeometry(QRect(930, 100, 256, 192))
+        self.graphicsView4.setFrameShape(QFrame.NoFrame)
+        self.graphicsView4.setScaledContents(True)
+        self.graphicsView4.setEnabled(False)
+        self.graphicsView4.setVisible(False)
+
+        ####################################
+
+
+
+        self.output_video_frame = QFrame(self.frame)
+        self.output_video_frame.setGeometry(QRect(930, 100, 256, 192))
+
+
+        ####################################
+
+
+        
 
 
         self.graphicsView2 = QLabel(self.frame)
@@ -365,13 +391,7 @@ class Ui_MainPages(object):
         self.graphicsView3.setScaledContents(True)
         self.graphicsView3.setEnabled(False)
         self.graphicsView3.setVisible(False)
-        self.graphicsView4 = QLabel(self.frame)
-        self.graphicsView4.setObjectName(u"graphicsView4")
-        self.graphicsView4.setGeometry(QRect(930, 100, 256, 192))
-        self.graphicsView4.setFrameShape(QFrame.NoFrame)
-        self.graphicsView4.setScaledContents(True)
-        self.graphicsView4.setEnabled(False)
-        self.graphicsView4.setVisible(False)
+
 
 
 

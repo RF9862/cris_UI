@@ -27,6 +27,8 @@ from functools import partial
 from qt_core import *
 from PySide6.QtMultimedia import QMediaPlayer
 
+from gui.widgets.py_video_player.py_video_player import VideoPlayer
+
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from gui.core.json_settings import Settings
@@ -514,11 +516,15 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_9.addWidget(self.btn_upload_test)
 
         def show_image(show_file):
-            self.ui.load_pages.graphicsView1_video.setVisible(False)
-            self.ui.load_pages.graphicsView1_video.setEnabled(False)
 
-            self.ui.load_pages.graphicsView1.setVisible(True)
-            self.ui.load_pages.graphicsView1.setEnabled(True)
+            self.ui.load_pages.video_frame.setVisible(False)
+            self.ui.load_pages.video_frame.setEnabled(False)
+
+            self.ui.load_pages.output_video_frame.setVisible(False)
+            self.ui.load_pages.output_video_frame.setEnabled(False)
+
+            self.ui.load_pages.graphicsView4.setVisible(False)
+            self.ui.load_pages.graphicsView4.setEnabled(False)
             
             pixmap = QPixmap(show_file)
             # pixmap.scaled(128, 128, Qt.KeepAspectRatio)
@@ -529,14 +535,19 @@ class SetupMainWindow:
             self.ui.load_pages.graphicsView1.setVisible(False)
             self.ui.load_pages.graphicsView1.setEnabled(False)
 
-            self.ui.load_pages.graphicsView1_video.setVisible(True)
-            self.ui.load_pages.graphicsView1_video.setEnabled(True)
+            self.ui.load_pages.graphicsView4.setVisible(False)
+            self.ui.load_pages.graphicsView4.setEnabled(False)
 
-            self.mediaPlayer = QMediaPlayer()
-            self.mediaPlayer.setSource(QUrl.fromLocalFile(show_file))
-            self.mediaPlayer.setVideoOutput(self.ui.load_pages.graphicsView1_video)
-            
-            self.mediaPlayer.play()
+            self.ui.load_pages.output_video_frame.setVisible(False)
+            self.ui.load_pages.output_video_frame.setEnabled(False)
+
+            self.ui.load_pages.video_frame.setVisible(True)
+            self.ui.load_pages.video_frame.setEnabled(True)
+
+
+            videoplayer = VideoPlayer(show_file, parent=self.ui.load_pages.video_frame)
+            videoplayer.resize(self.ui.load_pages.video_frame.frameSize())
+            videoplayer.show()
 
         def show_input():
             show_file = self.btn_upload_test.files[0]
@@ -563,11 +574,13 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_9.addWidget(self.btn_test_submit)
 
         def predict_image(save_file, selected_model):
-            self.ui.load_pages.graphicsView1_video.setEnabled(False)
-            self.ui.load_pages.graphicsView1_video.setVisible(False)
+            #self.ui.load_pages.graphicsView1_video.setEnabled(False)
+            #self.ui.load_pages.graphicsView1_video.setVisible(False)
+            self.ui.load_pages.output_video_frame.setVisible(False)
+            self.ui.load_pages.output_video_frame.setEnabled(False)
             
-            self.ui.load_pages.graphicsView1.setEnabled(True)
-            self.ui.load_pages.graphicsView1.setVisible(True)
+            self.ui.load_pages.graphicsView4.setEnabled(True)
+            self.ui.load_pages.graphicsView4.setVisible(True)
 
             save_file = Functions.predict_image_yolo(save_file, selected_model)
             # save_file = Functions.detect_yolo5(save_file, selected_model)
@@ -582,19 +595,18 @@ class SetupMainWindow:
 
         def predict_video_stream(save_file, selected_model):
 
-            self.ui.load_pages.graphicsView1.setEnabled(False)
-            self.ui.load_pages.graphicsView1.setVisible(False)
+            self.ui.load_pages.graphicsView4.setEnabled(False)
+            self.ui.load_pages.graphicsView4.setVisible(False)
 
-            self.ui.load_pages.graphicsView1_video.setEnabled(True)
-            self.ui.load_pages.graphicsView1_video.setVisible(True)
+            self.ui.load_pages.output_video_frame.setVisible(True)
+            self.ui.load_pages.output_video_frame.setEnabled(True)
 
             save_file = Functions.predict_video(save_file, selected_model)
             print(save_file)
 
-            self.mediaPlayer = QMediaPlayer()
-            self.mediaPlayer.setSource(QUrl.fromLocalFile(save_file))
-            self.mediaPlayer.setVideoOutput(self.ui.load_pages.graphicsView1_video)
-            self.mediaPlayer.play()
+            videoplayer = VideoPlayer(save_file, parent=self.ui.load_pages.output_video_frame)
+            videoplayer.resize(self.ui.load_pages.output_video_frame.frameSize())
+            videoplayer.show()
 
         def predict_file():
             files = self.btn_upload_test.files
