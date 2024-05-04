@@ -260,7 +260,7 @@ class SetupMainWindow:
 
 
         self.btn_save_model = ToggleButton(
-            text="Save/Name model",
+            text="Save model",
             radius=8,
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
@@ -582,6 +582,7 @@ class SetupMainWindow:
             self.ui.load_pages.graphicsView4.setEnabled(True)
             self.ui.load_pages.graphicsView4.setVisible(True)
 
+            
             save_file = Functions.predict_image_yolo(save_file, selected_model)
             # save_file = Functions.detect_yolo5(save_file, selected_model)
             

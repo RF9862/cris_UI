@@ -103,6 +103,7 @@ class UtilityFunctions:
 
             print(f"Folder '{source_folder}' copied to '{Functions.current_destination_dir}' successfully.")
 
+            return len(img_file_names)
         except Exception as e:
             raise e
 
@@ -173,12 +174,12 @@ class Functions:
     def upload_folder(setup_window):
         setup_window.ui.load_pages.label_3.hide()
         setup_window.ui.load_pages.verticalLayoutWidget.show()          
-        UtilityFunctions.copy_dir(
+        img_files_num = UtilityFunctions.copy_dir(
             source_folder=setup_window.btn_next.src_folder,
             progress_bar=setup_window.circular_bar_load_img
         )
         setup_window.ui.load_pages.label_3.show()
-        setup_window.ui.load_pages.label_3.setText("Successfully Uploaded")
+        setup_window.ui.load_pages.label_3.setText(f"Successfully Uploaded {img_files_num} images")
         setup_window.ui.load_pages.verticalLayoutWidget.hide()          
 
 
@@ -224,7 +225,9 @@ class Functions:
         
     def detect_yolo5(img_file_path, selected_model_path):
 
-        save_path = y5_detect(weights=selected_model_path, source=img_file_path, conf_thres=0.1)
+
+        save_path = y5_detect(weights=selected_model_path, source=img_file_path, conf_thres=0.1,
+                              project=Functions.save_predictions_dir, name="", exist_ok=True)
         return save_path
 
     def predict_image_yolo(img_file_path, selected_model_path):

@@ -67,7 +67,8 @@ class Ui_MainPages(object):
 
         self.label_3 = QLabel(self.frame_load_images)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(x_pos_load_img, 100, load_img_width, 41))
+        self.label_3.setGeometry(QRect(x_pos_load_img, 100, load_img_width, 51))
+        self.label_3.setWordWrap(True)
 
         self.label_8 = QLabel(self.verticalLayoutWidget)
         self.label_8.setObjectName(u"label_8")
