@@ -29,9 +29,10 @@ import torch
 import mimetypes
 
 from ultralytics import YOLO
-from yolo_src.yolo_utils import YOLOFunctions
+from yolo_src.yolo_utils import YOLOFunctions, YOLO5Functions
 #from yolov8.src.config import SAVE_MODEL_PATH
 from yolov5.detect import run as y5_detect
+
 from gui.core.json_settings import Settings
 current_directory = os.getcwd()
 
@@ -198,12 +199,25 @@ class Functions:
         Functions.save_model_path = yolo.get_custom_model_path()
 
 
+    def start_training_yolo5(params, progress_bar):
+        yolo = YOLO5Functions(data_dir=Functions.current_destination_dir,
+                              params=params)
+
+        Functions.yolo = yolo
+
+
+        t1 = threading.Thread(target=yolo.train, args=(progress_bar,))
+        t1.start()
+
+
+
     def start_training(setup_window, params, status):
         try:
             if setup_window.btn_yolo8.isChecked():
                 Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model)
             elif setup_window.btn_yolo5.isChecked():
-                Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
+                #Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
+                Functions.start_training_yolo5(params, setup_window.circular_bar_train_model)
             else:
                 print(f"SELECT AT LEAST ONE MODEL.")
                 setup_window.ui.load_pages.label_11.show()

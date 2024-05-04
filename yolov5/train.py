@@ -19,6 +19,7 @@ import math
 import os
 import random
 import subprocess
+import threading
 import sys
 import time
 from copy import deepcopy
@@ -100,7 +101,28 @@ WORLD_SIZE = int(os.getenv("WORLD_SIZE", 1))
 GIT_INFO = check_git_info()
 
 
-def train(hyp, opt, device, callbacks):
+
+
+
+
+def check_status( progress_bar, epochs, current_epoch, n, total):
+    try:
+        
+        prev_progress = (current_epoch-1) / epochs * 100
+        current_progress = (n / total *100) /epochs
+        
+        progress = prev_progress+current_progress
+        #print(f"\n\n\n{prev_progress+current_progress}")
+        if progress_bar:
+            progress_bar.set_value(int(progress))
+        
+    except Exception as e:
+        print(str(e))
+
+
+
+
+def train(hyp, opt, device, progress_bar, callbacks):
     """
     Trains YOLOv5 model with given hyperparameters, options, and device, managing datasets, model architecture, loss
     computation, and optimizer steps.
@@ -352,6 +374,8 @@ def train(hyp, opt, device, callbacks):
         LOGGER.info(("\n" + "%11s" * 7) % ("Epoch", "GPU_mem", "box_loss", "obj_loss", "cls_loss", "Instances", "Size"))
         if RANK in {-1, 0}:
             pbar = tqdm(pbar, total=nb, bar_format=TQDM_BAR_FORMAT)  # progress bar
+
+
         optimizer.zero_grad()
         for i, (imgs, targets, paths, _) in pbar:  # batch -------------------------------------------------------------
             callbacks.run("on_train_batch_start")
@@ -404,10 +428,15 @@ def train(hyp, opt, device, callbacks):
             if RANK in {-1, 0}:
                 mloss = (mloss * i + loss_items) / (i + 1)  # update mean losses
                 mem = f"{torch.cuda.memory_reserved() / 1E9 if torch.cuda.is_available() else 0:.3g}G"  # (GB)
+
                 pbar.set_description(
                     ("%11s" * 2 + "%11.4g" * 5)
                     % (f"{epoch}/{epochs - 1}", mem, *mloss, targets.shape[0], imgs.shape[-1])
                 )
+            
+                check_status(progress_bar, epochs, epoch+1, pbar.n+1, pbar.total)
+
+
                 callbacks.run("on_train_batch_end", model, ni, imgs, targets, paths, list(mloss))
                 if callbacks.stop_training:
                     return
@@ -565,7 +594,7 @@ def parse_opt(known=False):
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
-def main(opt, callbacks=Callbacks()):
+def main(opt, progress_bar, callbacks=Callbacks()):
     """Runs training or hyperparameter evolution with specified options and optional callbacks."""
     if RANK in {-1, 0}:
         print_args(vars(opt))
@@ -620,7 +649,7 @@ def main(opt, callbacks=Callbacks()):
 
     # Train
     if not opt.evolve:
-        train(opt.hyp, opt, device, callbacks)
+        train(opt.hyp, opt, device, progress_bar, callbacks)
 
     # Evolve hyperparameters (optional)
     else:
@@ -837,9 +866,12 @@ def run(**kwargs):
     Example: import train; train.run(data='coco128.yaml', imgsz=320, weights='yolov5m.pt')
     """
     opt = parse_opt(True)
+    progress_bar =  kwargs["progress_bar"]
+    del  kwargs["progress_bar"]
     for k, v in kwargs.items():
         setattr(opt, k, v)
-    main(opt)
+
+    main(opt,progress_bar)
     return opt
 
 

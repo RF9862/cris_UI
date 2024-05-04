@@ -25,6 +25,8 @@ YOLO8_MODEL_PATH = os.path.join(ROOT_DIR, "yolov8", "yolov8n.pt")
 
 YOLO5_MODEL_PATH = os.path.join(ROOT_DIR, "yolov5", "yolov5s.pt") 
 
+YOLO5_TRAIN_FILE_PATH = os.path.join(ROOT_DIR, "yolov5", "train.py")
+
 SAVE_MODEL_PATH = os.path.join(ROOT_DIR, CRIS_MODEL)
 
 SAVE_PREDICTIONS_DIR = os.path.join(ROOT_DIR, "predictions")

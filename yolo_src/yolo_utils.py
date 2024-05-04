@@ -8,6 +8,9 @@ from yolo_src import config
 from ultralytics import YOLO
 import cv2
 
+from yolov5.train import run as y5_train
+from yolo_src.config import SAVE_MODEL_PATH, SAVE_PREDICTIONS_DIR
+
 
 
 class YOLOFunctions:
@@ -226,8 +229,36 @@ class YOLOFunctions:
         pattern = os.path.join(save_models_dir, "**", "best.pt")
         pt_files  = glob.glob(pattern, recursive=True)
         return pt_files
+    
 
 
+class YOLO5Functions(YOLOFunctions):
+    def __init__(self, data_dir, 
+                 yolo_version=5, 
+                 params=None, 
+                 model_path=None,
+                save_model_dir=config.SAVE_MODEL_PATH, 
+                save_predictions_dir=config.SAVE_PREDICTIONS_DIR,
+                train_file_path=config.YOLO5_TRAIN_FILE_PATH   ):
+        super().__init__(data_dir, yolo_version, params, model_path, save_model_dir, save_predictions_dir)
+        self.train_file_path = train_file_path
+
+    def load_model(self):
+        self.weights = self.model_path
+
+    def train(self,progress_bar):
+        
+        t_stamp = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
+        project_name = f"{self.parameters['name']}_yolov{self.yolo_version}_{t_stamp}"
+        y5_train(data=self.custom_yaml_file_path,
+                 weights=self.weights,
+                 batch_size=self.parameters["batch"],
+                 epochs=self.parameters["epochs"],
+                 project=self.save_model_dir,
+                 name=project_name,
+                 exist_ok=True, 
+                 progress_bar=progress_bar)
+        
     
 
 

@@ -48,3 +48,11 @@ Then run main.py file as usual.
 │   └── classes.txt
 
 ```
+
+## ERRORS:
+1. If you get error related to CUDA even if a cuda device is available, please try:
+```
+sudo rmmod nvidia_uvm
+sudo modprobe nvidia_uvm
+```
+and then try again.
