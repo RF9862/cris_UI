@@ -37,7 +37,7 @@ from gui.core.json_settings import Settings
 current_directory = os.getcwd()
 
 sys.path.insert(0, current_directory)
-from constants import CRIS_MODEL
+from constants import CRIS_MODEL, EPOCHS, BATCH_SIZE_GPU, BATCH_SIZE_CPU
 UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
@@ -325,15 +325,15 @@ class Functions:
 
 
     def validate_params(setup_window):
-        epochs = setup_window.ui.load_pages.epoch_option.text()
-        batch = setup_window.ui.load_pages.batch_option.text()
-        device = setup_window.ui.load_pages.gpu_option.currentText()
-        if device == "gpu":
-            if not UtilityFunctions.gpu_available():
-                print("No cuda device found.")
-                return None
-            
+        epochs = EPOCHS
+        if UtilityFunctions.gpu_available():
+            print("Using cuda device.")
             device = "cuda"
+            batch = BATCH_SIZE_GPU
+        else:
+            print("No cuda device found.")
+            device = "cpu"
+            batch = BATCH_SIZE_CPU
 
         model_name = setup_window.ui.load_pages.model_name_option.toPlainText()
         class_names = Functions.CLASS_NAMES

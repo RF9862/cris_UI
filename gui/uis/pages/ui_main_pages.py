@@ -210,9 +210,9 @@ class Ui_MainPages(object):
         self.label_param_1.setGeometry(QRect(100, 0, 311, 41))
         self.verticalLayoutWidget_param_1 = QWidget(self.frame_train_model_param)
         self.verticalLayoutWidget_param_1.setObjectName(u"verticalLayoutWidget_param_1")
-        self.verticalLayoutWidget_param_1.setGeometry(QRect(90, 50, 451, 161))
+        self.verticalLayoutWidget_param_1.setGeometry(QRect(90, 50, 451, 61))
 
-        self.epoch_option = QLineEdit()
+        """self.epoch_option = QLineEdit()
         self.epoch_option.setValidator(QIntValidator())
         self.epoch_option.setText("3")
 
@@ -221,7 +221,7 @@ class Ui_MainPages(object):
         self.batch_option.setText("8")
 
         self.gpu_option = QComboBox()
-        self.gpu_option.addItems(["cpu", "gpu"])
+        self.gpu_option.addItems(["cpu", "gpu"])"""
 
         self.model_name_option = QTextEdit()
         self.model_name_option.setText("custom_model")
@@ -229,9 +229,9 @@ class Ui_MainPages(object):
         #self.class_names_option = QTextEdit()
 
         self.form_param = QFormLayout(self.verticalLayoutWidget_param_1)
-        self.form_param.addRow("Epochs: ", self.epoch_option)
-        self.form_param.addRow("Batch size:", self.batch_option)
-        self.form_param.addRow("Device:", self.gpu_option)
+        #self.form_param.addRow("Epochs: ", self.epoch_option)
+        #self.form_param.addRow("Batch size:", self.batch_option)
+        #self.form_param.addRow("Device:", self.gpu_option)
         self.form_param.addRow("Model name:", self.model_name_option)
         #self.form_param.addRow("Class names :", self.class_names_option)
 
