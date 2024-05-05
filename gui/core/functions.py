@@ -209,8 +209,6 @@ class Functions:
         t1 = threading.Thread(target=yolo.train, args=(progress_bar,))
         t1.start()
 
-
-
     def start_training(setup_window, params, status):
         try:
             if setup_window.btn_yolo8.isChecked():
@@ -229,8 +227,6 @@ class Functions:
             status[0] = False
             raise e
         
-
-
     def get_save_model_path():
         if Functions.save_model_path:
             return str(Functions.save_model_path)
@@ -244,15 +240,37 @@ class Functions:
                               project=Functions.save_predictions_dir, name="", exist_ok=True)
         return save_path
 
-    def predict_image_yolo(img_file_path, selected_model_path):
+    def predict_image_yolo(setup_window, img_file_path, selected_model_path):
 
-        model = YOLO(selected_model_path)
-        os.makedirs(Functions.save_predictions_dir, exist_ok=True)
-        prediction = model(img_file_path)
-        save_path = os.path.join(Functions.save_predictions_dir, os.path.basename(img_file_path))
-        prediction[0].save(filename=save_path)
+        if setup_window.btn_yolo8.isChecked():
+            try:
+                model = YOLO(selected_model_path)
+                os.makedirs(Functions.save_predictions_dir, exist_ok=True)
+                prediction = model(img_file_path)
+                save_path = os.path.join(Functions.save_predictions_dir, os.path.basename(img_file_path))
+                prediction[0].save(filename=save_path)
+                setup_window.ui.load_pages.label_17.setText("The wegith file is not Yolo ")
 
-        print(f"Prediction results saved to : {Functions.save_predictions_dir}")
+                print(f"Prediction results saved to : {Functions.save_predictions_dir}")
+            except:
+                setup_window.ui.load_pages.label_17.setText("The wegith file is not supported for Yolov8 ")
+                return -1
+        elif setup_window.btn_yolo5.isChecked():
+            try:
+                save_path = y5_detect(weights=selected_model_path, source=img_file_path, conf_thres=0.1,
+                                project=Functions.save_predictions_dir, name="", exist_ok=True)
+            except: 
+                setup_window.ui.load_pages.label_17.setText("The wegith file is supported for not Yolov5 ")
+                return -1
+        else:
+            print(f"SELECT AT LEAST ONE MODEL.")
+            setup_window.ui.load_pages.label_17.setText("SELECT AT LEAST ONE MODEL.")
+            return -1
+            # setup_window.ui.load_pages.label_11.show()
+            # setup_window.ui.load_pages.label_11.setText("SELECT AT LEAST ONE MODEL.")
+            # setup_window.ui.load_pages.verticalLayoutWidget_3.hide()              
+
+
         return save_path
     
 

@@ -453,7 +453,7 @@ class Ui_MainPages(object):
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Drag and Drop or Select images</p></body></html>", None))
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>path here.</p></body></html>", None))
         
-        self.label_17.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select model </p></body></html>", None))
+        self.label_17.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p> </p></body></html>", None))
         self.label_18.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Select images(.jpg) or video(.mp4)</p></body></html>", None))
         
         self.label_param_1.setText("Training parameters:")

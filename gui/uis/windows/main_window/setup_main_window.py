@@ -583,15 +583,13 @@ class SetupMainWindow:
             self.ui.load_pages.graphicsView4.setVisible(True)
 
             
-            save_file = Functions.predict_image_yolo(save_file, selected_model)
-            # save_file = Functions.detect_yolo5(save_file, selected_model)
-            
+            save_file = Functions.predict_image_yolo(self, save_file, selected_model)   
             print(save_file)
-
-            
-            pixmap = QPixmap(save_file)
-            self.ui.load_pages.graphicsView4.setPixmap(pixmap)
-            self.ui.load_pages.graphicsView4.show()
+            if save_file != -1:       
+                # save_file = Functions.detect_yolo5(save_file, selected_model)
+                pixmap = QPixmap(save_file)
+                self.ui.load_pages.graphicsView4.setPixmap(pixmap)
+                self.ui.load_pages.graphicsView4.show()
 
 
         def predict_video_stream(save_file, selected_model):
@@ -610,19 +608,24 @@ class SetupMainWindow:
             videoplayer.show()
 
         def predict_file():
-            files = self.btn_upload_test.files
-            # selected_model = self.combo_list.currentText()
-            #selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
-            selected_model =  self.combo_list.currentText()
-            print(selected_model)
-            
-            file_path = files[0]
-            if UtilityFunctions.is_video_file(file_path):
-                predict_video_stream(file_path, selected_model)
-            elif UtilityFunctions.is_image_file(file_path):
-                predict_image(file_path, selected_model)
-            else:
-                print(f"File format is not supported:{file_path}")
+            try:
+                files = self.btn_upload_test.files
+            except:
+                files = []
+                self.ui.load_pages.label_17.setText("Upload test image first")
+            if len(files) > 0:
+                # selected_model = self.combo_list.currentText()
+                #selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
+                selected_model =  self.combo_list.currentText()
+                print(selected_model)
+                
+                file_path = files[0]
+                if UtilityFunctions.is_video_file(file_path):
+                    predict_video_stream(file_path, selected_model)
+                elif UtilityFunctions.is_image_file(file_path):
+                    predict_image(file_path, selected_model)
+                else:
+                    print(f"File format is not supported:{file_path}")
 
 
 
