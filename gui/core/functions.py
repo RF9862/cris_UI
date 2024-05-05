@@ -37,7 +37,7 @@ from gui.core.json_settings import Settings
 current_directory = os.getcwd()
 
 sys.path.insert(0, current_directory)
-from constants import CRIS_MODEL, EPOCHS, BATCH_SIZE_GPU, BATCH_SIZE_CPU
+from constants import CRIS_MODEL, EPOCHS, BATCH_SIZE_GPU, BATCH_SIZE_CPU, EPOCHS_TO_IMPROVE
 UPLOAD_DATA_DIR_NAME = Settings().items["upload_dir_name"]
 DESTINATION_DIR = os.path.join(os.getcwd(), UPLOAD_DATA_DIR_NAME)
 
@@ -184,9 +184,20 @@ class Functions:
         setup_window.ui.load_pages.verticalLayoutWidget.hide()          
 
 
-    def start_training_yolo(yolo_version, params, progress_bar):
+    def start_training_yolo(yolo_version, params, progress_bar, improve_accuracy):
+
+        if improve_accuracy:
+            if not Functions.save_model_path:
+                print(f"No previous model found.")
+                return
+            model_path = Functions.save_model_path
+            params["epochs"] = EPOCHS_TO_IMPROVE
+        else:
+            model_path = None
+            
         yolo = YOLOFunctions(data_dir=Functions.current_destination_dir,
                               yolo_version=yolo_version,
+                              model_path=model_path,
                               params=params)
 
         Functions.yolo = yolo
@@ -199,8 +210,18 @@ class Functions:
         Functions.save_model_path = yolo.get_custom_model_path()
 
 
-    def start_training_yolo5(params, progress_bar):
+
+    def start_training_yolo5(params, progress_bar, improve_accuracy):
+        if improve_accuracy:
+            if not Functions.save_model_path:
+                print(f"No previous model found.")
+                return
+            model_path = Functions.save_model_path
+            params["epochs"] = EPOCHS_TO_IMPROVE
+        else:
+            model_path = None
         yolo = YOLO5Functions(data_dir=Functions.current_destination_dir,
+                              model_path=model_path,
                               params=params)
 
         Functions.yolo = yolo
@@ -209,13 +230,18 @@ class Functions:
         t1 = threading.Thread(target=yolo.train, args=(progress_bar,))
         t1.start()
 
-    def start_training(setup_window, params, status):
+        while t1.is_alive():
+            time.sleep(2)
+        Functions.save_model_path = yolo.get_custom_model_path()
+
+
+    def start_training(setup_window, params, status, improve_accuracy):
         try:
             if setup_window.btn_yolo8.isChecked():
-                Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model)
+                Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model, improve_accuracy)
             elif setup_window.btn_yolo5.isChecked():
                 #Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
-                Functions.start_training_yolo5(params, setup_window.circular_bar_train_model)
+                Functions.start_training_yolo5(params, setup_window.circular_bar_train_model, improve_accuracy)
             else:
                 print(f"SELECT AT LEAST ONE MODEL.")
                 setup_window.ui.load_pages.label_11.show()
@@ -232,6 +258,9 @@ class Functions:
             return str(Functions.save_model_path)
         else:
             return "No current model found."
+        
+
+
         
     def detect_yolo5(img_file_path, selected_model_path):
 

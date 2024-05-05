@@ -183,7 +183,7 @@ class Ui_MainPages(object):
 
         self.horizontalLayoutWidget_3_train = QWidget(self.frame_train_model)
         self.horizontalLayoutWidget_3_train.setObjectName(u"horizontalLayoutWidget_3_train")
-        self.horizontalLayoutWidget_3_train.setGeometry(QRect(80, 240, 321, 49))
+        self.horizontalLayoutWidget_3_train.setGeometry(QRect(0, 240, 521, 49))
 
         self.btn_layout_7_train = QHBoxLayout(self.horizontalLayoutWidget_3_train)
         self.btn_layout_7_train.setObjectName(u"btn_layout_7")

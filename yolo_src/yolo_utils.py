@@ -11,7 +11,7 @@ import cv2
 from yolov5.train import run as y5_train
 from yolo_src.config import SAVE_MODEL_PATH, SAVE_PREDICTIONS_DIR
 
-
+WEIGHTS_DIR, PT_FILE_NAME = "weights", "best.pt"
 
 class YOLOFunctions:
     def __init__(self, data_dir, yolo_version,
@@ -220,7 +220,7 @@ class YOLOFunctions:
 
     
     def get_custom_model_path(self):
-        return self.results.save_dir if self.results.save_dir else None
+        return os.path.join(self.results.save_dir, WEIGHTS_DIR, PT_FILE_NAME) if self.results.save_dir else None
     
 
 
@@ -250,7 +250,7 @@ class YOLO5Functions(YOLOFunctions):
         
         t_stamp = f"{datetime.now().strftime('%d%m%Y__%H%M%S')}"
         project_name = f"{self.parameters['name']}_yolov{self.yolo_version}_{t_stamp}"
-        y5_train(data=self.custom_yaml_file_path,
+        results = y5_train(data=self.custom_yaml_file_path,
                  weights=self.weights,
                  batch_size=self.parameters["batch"],
                  epochs=self.parameters["epochs"],
@@ -258,6 +258,8 @@ class YOLO5Functions(YOLOFunctions):
                  name=project_name,
                  exist_ok=True, 
                  progress_bar=progress_bar)
+        
+        self.results = results
         
     
 

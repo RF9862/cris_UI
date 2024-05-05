@@ -471,6 +471,9 @@ def train(hyp, opt, device, progress_bar, callbacks):
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
+
+            print(f"\nfitness:{best_fitness}\n")
+
             log_vals = list(mloss) + list(results) + lr
             callbacks.run("on_fit_epoch_end", log_vals, epoch, best_fitness, fi)
 

@@ -8,8 +8,8 @@ CRISPATH = "cris_weights/.cris"
 CRIS_MODEL = "cris_weights/.cris/model"
 CRISPATH_LOC = "cris_weights/.cris/cris"
 
-
-EPOCHS = 3
+EPOCHS = 1
+EPOCHS_TO_IMPROVE = 5
 BATCH_SIZE_GPU = 8
 BATCH_SIZE_CPU = 1
 

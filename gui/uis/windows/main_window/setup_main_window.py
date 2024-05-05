@@ -373,7 +373,7 @@ class SetupMainWindow:
         self.ui.load_pages.btn_layout_7.addWidget(self.btn_train)
 
         
-        def trainThread():
+        def trainThread(improve_accuracy:bool):
             # first two conditions check if the folder is uploaded already
             if not hasattr(self.btn_next, "src_folder"):
                 self.ui.load_pages.label_11.show()
@@ -422,15 +422,28 @@ class SetupMainWindow:
 
                 
                 t1 = threading.Thread(target=Functions.start_training, 
-                                      args=(self,params, training_ongoing))
+                                      args=(self,params, training_ongoing, improve_accuracy))
                 t1.start()
             
         self.btn_train.clicked.connect(
-            #partial(Functions.start_training, self)
-            trainThread
+            partial(trainThread, False)
             )
+        
 
+        self.btn_improve_accuracy = PyPushButton(
+            text="Improve Accuracy",
+            radius=8,
+            color=self.themes["app_color"]["text_title"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_two"],
+            bg_color_pressed=self.themes["app_color"]["dark_three"],
+        )
+        
+        self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_improve_accuracy)
 
+        self.btn_improve_accuracy.clicked.connect(
+            partial(trainThread, True)
+        )
 
 
         ##################################################################
@@ -682,6 +695,7 @@ class SetupMainWindow:
         def show_training_frame():
             self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_back_train)
             self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_train)
+            self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_improve_accuracy)
             
 
             # disable the current parameters frame
