@@ -11,6 +11,8 @@ import cv2
 from yolov5.train import run as y5_train
 from yolo_src.config import SAVE_MODEL_PATH, SAVE_PREDICTIONS_DIR
 
+from constants import PATIENCE, EXPECTED_ACCURACY
+
 WEIGHTS_DIR, PT_FILE_NAME = "weights", "best.pt"
 
 class YOLOFunctions:
@@ -87,7 +89,8 @@ class YOLOFunctions:
             data=self.custom_yaml_file_path,
             epochs=self.parameters["epochs"],
             batch=self.parameters["batch"],
-            name=f"{self.save_model_dir}/{self.parameters['name']}_yolov{self.yolo_version}_{t_stamp}"
+            name=f"{self.save_model_dir}/{self.parameters['name']}_yolov{self.yolo_version}_{t_stamp}",
+            patience=PATIENCE
         )
 
         self.results = results
@@ -190,6 +193,8 @@ class YOLOFunctions:
         for file in train_files:
             src_path = os.path.join(self.data_dir, file)
             dest_path = os.path.join(train_dir, file)
+            if not os.path.exists(src_path) :
+                continue
             shutil.move(src_path, dest_path)
 
         # Move val files to val directory
@@ -257,7 +262,9 @@ class YOLO5Functions(YOLOFunctions):
                  project=self.save_model_dir,
                  name=project_name,
                  exist_ok=True, 
-                 progress_bar=progress_bar)
+                 patience=3,
+                 progress_bar=progress_bar, 
+                 expected_accuracy = EXPECTED_ACCURACY)
         
         self.results = results
         

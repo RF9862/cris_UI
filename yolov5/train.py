@@ -122,7 +122,7 @@ def check_status( progress_bar, epochs, current_epoch, n, total):
 
 
 
-def train(hyp, opt, device, progress_bar, callbacks):
+def train(hyp, opt, device, progress_bar, expected_accuracy, callbacks):
     """
     Trains YOLOv5 model with given hyperparameters, options, and device, managing datasets, model architecture, loss
     computation, and optimizer steps.
@@ -472,7 +472,10 @@ def train(hyp, opt, device, progress_bar, callbacks):
             if fi > best_fitness:
                 best_fitness = fi
 
-            print(f"\nfitness:{best_fitness}\n")
+            if best_fitness >= expected_accuracy:
+                stop = True
+
+            #print(f"\nfitness:{best_fitness}\n")
 
             log_vals = list(mloss) + list(results) + lr
             callbacks.run("on_fit_epoch_end", log_vals, epoch, best_fitness, fi)
@@ -597,7 +600,7 @@ def parse_opt(known=False):
     return parser.parse_known_args()[0] if known else parser.parse_args()
 
 
-def main(opt, progress_bar, callbacks=Callbacks()):
+def main(opt, progress_bar,expected_accuracy, callbacks=Callbacks()):
     """Runs training or hyperparameter evolution with specified options and optional callbacks."""
     if RANK in {-1, 0}:
         print_args(vars(opt))
@@ -652,7 +655,7 @@ def main(opt, progress_bar, callbacks=Callbacks()):
 
     # Train
     if not opt.evolve:
-        train(opt.hyp, opt, device, progress_bar, callbacks)
+        train(opt.hyp, opt, device, progress_bar, expected_accuracy,callbacks)
 
     # Evolve hyperparameters (optional)
     else:
@@ -870,11 +873,13 @@ def run(**kwargs):
     """
     opt = parse_opt(True)
     progress_bar =  kwargs["progress_bar"]
+    expected_accuracy = kwargs["expected_accuracy"]
     del  kwargs["progress_bar"]
+    del kwargs["expected_accuracy"]
     for k, v in kwargs.items():
         setattr(opt, k, v)
 
-    main(opt,progress_bar)
+    main(opt,progress_bar, expected_accuracy)
     return opt
 
 
