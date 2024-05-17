@@ -22,13 +22,15 @@ class PyCircularProgress(QWidget):
     def __init__(
         self,
         value = 0,
+        accuracy = 0,
+        set_accuracy = True,
         progress_width = 15,
         is_rounded = True,
         max_value = 100,
         progress_color = "#ff79c6",
         enable_text = True,
         font_family = "Segoe UI",
-        font_size = 24,
+        font_size = 16,
         suffix = "%",
         text_color = "#f5f6f9",
         enable_bg = True,
@@ -48,6 +50,8 @@ class PyCircularProgress(QWidget):
         self.font_family = font_family
         self.font_size = font_size
         self.suffix = suffix
+        self.accuracy = accuracy
+        self.set_accuracy = set_accuracy
         self.text_color = text_color
         # BG
         self.enable_bg = enable_bg
@@ -68,6 +72,10 @@ class PyCircularProgress(QWidget):
     def set_value(self, value):
         self.value = value
         self.repaint() # Render progress bar after change value
+    def set_accu(self, value):
+        self.accuracy = value
+        self.repaint() # Render progress bar after change value
+
 
 
     # PAINT EVENT (DESIGN YOUR CIRCULAR PROGRESS HERE)
@@ -116,7 +124,10 @@ class PyCircularProgress(QWidget):
             else:
                 pen.setColor(QColor(self.text_color))
                 paint.setPen(pen)
-                paint.drawText(rect, Qt.AlignCenter, f"{self.value}{self.suffix}")
+                if self.set_accuracy:
+                    paint.drawText(rect, Qt.AlignCenter, f"Progress: {str(self.value)}{self.suffix}\nAccuracy: {str(self.accuracy)}")
+                else:
+                    paint.drawText(rect, Qt.AlignCenter, f"{str(self.value)}{self.suffix}")
 
         # END
         paint.end()

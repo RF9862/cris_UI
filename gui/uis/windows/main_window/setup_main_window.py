@@ -21,7 +21,7 @@ from . functions_main_window import *
 import sys, getpass, datetime
 import os
 from functools import partial
-
+import shutil
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
@@ -152,7 +152,7 @@ class SetupMainWindow:
         # TITLE BAR / ADD EXTRA BUTTONS
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
-        self.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
+        # self.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
 
         # SET SIGNALS
         self.ui.title_bar.clicked.connect(self.btn_clicked)
@@ -317,7 +317,7 @@ class SetupMainWindow:
 
         ## circular progress bar for uploading data
         self.circular_bar_load_img = PyCircularProgress(
-            value=0, is_rounded=False
+            value=0, is_rounded=False, set_accuracy = False,
         )
         self.ui.load_pages.circular_layout.addWidget(self.circular_bar_load_img)
 
@@ -405,6 +405,8 @@ class SetupMainWindow:
 
                 self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_back_train)
                 self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_train)
+                self.btn_back_train.setEnabled(False)
+                self.btn_train.setEnabled(False)
                 
 
                 # disable the current parameters frame
@@ -419,11 +421,11 @@ class SetupMainWindow:
                 # enable the training frame
                 self.ui.load_pages.frame_train_model.setEnabled(True)
                 self.ui.load_pages.frame_train_model.setVisible(True)
-
                 
                 t1 = threading.Thread(target=Functions.start_training, 
                                       args=(self,params, training_ongoing, improve_accuracy))
                 t1.start()
+                self.btn_train.setEnabled(True)
             
         self.btn_train.clicked.connect(
             partial(trainThread, False)
@@ -437,8 +439,9 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_two"],
             bg_color_pressed=self.themes["app_color"]["dark_three"],
+            
         )
-        
+        self.btn_improve_accuracy.hide()
         self.ui.load_pages.btn_layout_7_train.addWidget(self.btn_improve_accuracy)
 
         self.btn_improve_accuracy.clicked.connect(
@@ -471,12 +474,22 @@ class SetupMainWindow:
                 f.write(f"Model Name: {model_name}\n")
                 f.write(f"Location: [{str(g.latlng[0]), str(g.latlng[1])}]\n")
                 f.write(f"Time: {str(now)}\n")
-            self.ui.load_pages.label_13.setText(f"{model_name}_cris file has been saved")
+            self.ui.load_pages.label_13.setText(f"Your AI model {model_name} is created and ready to use.")
             print(cris_path)
             print(g.latlng)
-        self.btn_show_path.clicked.connect(save_cris_file)
-
-
+        def save_new_model():
+            if self.ui.load_pages.label_13.text() != '<html><head/><body><p>Your AI model is not created to use yet</p></body></html>':
+                import geocoder
+                model_path = Functions.get_save_model_path()
+                shutil.copyfile(model_path, os.path.join(CRIS_MODEL, "best.cris"))
+                model_name = self.ui.load_pages.model_name_option.toPlainText()
+                g = geocoder.ip('me')
+                cris_loc = f"Location: {str(g.latlng[0]), str(g.latlng[1])}"
+                if self.btn_yolo8.isChecked(): model_yolo = "Model YOLO8\n"
+                else: model_yolo = "Model YOLO5\n"
+                label13_txt = model_yolo  + f"Name {model_name}\n" + f"Location {cris_loc}"
+                self.ui.load_pages.label_13.setText(f"Your AI model {model_name} is created and ready to use.\n\n"+label13_txt)
+        self.btn_show_path.clicked.connect(save_new_model)
         ##################################################################
 
         self.circular_bar_test_model= PyCircularProgress(
@@ -503,14 +516,14 @@ class SetupMainWindow:
         # self.btn_refresh_models.clicked.connect(refresh_models)
 
         trained_models = UtilityFunctions.get_available_models()
-        self.combo_list = PyComboBox(
-            radius=8,
-            color=self.themes["app_color"]["text_title"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            bg_color_hover=self.themes["app_color"]["dark_two"],
-            Items = trained_models,
-        )
-        self.ui.load_pages.btn_layout_20.addWidget(self.combo_list)
+        # self.combo_list = PyComboBox(
+        #     radius=8,
+        #     color=self.themes["app_color"]["text_title"],
+        #     bg_color=self.themes["app_color"]["dark_one"],
+        #     bg_color_hover=self.themes["app_color"]["dark_two"],
+        #     Items = trained_models,
+        # )
+        # self.ui.load_pages.btn_layout_20.addWidget(self.combo_list)
 
         ##################################################
 
@@ -577,7 +590,7 @@ class SetupMainWindow:
         #### predict button
 
         self.btn_test_submit = PyPushButton(
-            text="Predict",
+            text="Test",
             radius=8,
             color=self.themes["app_color"]["text_title"],
             bg_color=self.themes["app_color"]["dark_one"],
@@ -595,7 +608,7 @@ class SetupMainWindow:
             self.ui.load_pages.graphicsView4.setEnabled(True)
             self.ui.load_pages.graphicsView4.setVisible(True)
 
-            
+                        
             save_file = Functions.predict_image_yolo(self, save_file, selected_model)   
             print(save_file)
             if save_file != -1:       
@@ -629,8 +642,12 @@ class SetupMainWindow:
             if len(files) > 0:
                 # selected_model = self.combo_list.currentText()
                 #selected_model = os.path.join(CRIS_MODEL, self.combo_list.currentText())
-                selected_model =  self.combo_list.currentText()
-                print(selected_model)
+                # selected_model =  self.combo_list.currentText()
+                # selected_model = Functions.get_save_model_path()
+                selcted_model_temp = os.path.join(CRIS_MODEL, "best.cris")
+                selected_model = os.path.join(CRIS_MODEL, "best.pt")
+                shutil.copyfile(selcted_model_temp, selected_model)
+                # print(selected_model)
                 
                 file_path = files[0]
                 if UtilityFunctions.is_video_file(file_path):
@@ -639,7 +656,6 @@ class SetupMainWindow:
                     predict_image(file_path, selected_model)
                 else:
                     print(f"File format is not supported:{file_path}")
-
 
 
         self.btn_test_submit.clicked.connect(predict_file)

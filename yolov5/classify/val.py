@@ -35,8 +35,8 @@ if str(ROOT) not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 from models.common import DetectMultiBackend
-from utils.dataloaders import create_classification_dataloader
-from utils.general import (
+from yolov5.utils.dataloaders import create_classification_dataloader
+from yolov5.utils.general import (
     LOGGER,
     TQDM_BAR_FORMAT,
     Profile,
@@ -46,7 +46,7 @@ from utils.general import (
     increment_path,
     print_args,
 )
-from utils.torch_utils import select_device, smart_inference_mode
+from yolov5.utils.torch_utils import select_device, smart_inference_mode
 
 
 @smart_inference_mode()

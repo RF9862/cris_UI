@@ -13,3 +13,5 @@ assets/
 **/predictions/
 models/
 cris_weights/
+pyinstaller.txt
+main.spec

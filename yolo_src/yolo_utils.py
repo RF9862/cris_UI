@@ -217,8 +217,12 @@ class YOLOFunctions:
             current_progress = (self.model.trainer.pbar.n / self.model.trainer.pbar.total *100) / self.parameters['epochs']
             progress = prev_progress+current_progress
             #print(f"\n\n\n{prev_progress+current_progress}")
+            accu = self.model.trainer.fitness
             if progress_bar:
-                progress_bar.set_value(int(progress))
+                progress_bar.set_value(round(progress, 1))
+                progress_bar.set_accu(round(accu, 2))
+            # if accu > 0.7:
+            #     self.model.trainer.stop = True
             
         except Exception as e:
             pass

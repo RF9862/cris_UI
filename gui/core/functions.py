@@ -184,7 +184,7 @@ class Functions:
         setup_window.ui.load_pages.verticalLayoutWidget.hide()          
 
 
-    def start_training_yolo(yolo_version, params, progress_bar, improve_accuracy):
+    def start_training_yolo(yolo_version, params, progress_bar, improve_accuracy, model_name):
 
         if improve_accuracy:
             if not Functions.save_model_path:
@@ -208,10 +208,11 @@ class Functions:
             yolo.check_status(progress_bar)
             time.sleep(1)
         Functions.save_model_path = yolo.get_custom_model_path()
+        
 
 
 
-    def start_training_yolo5(params, progress_bar, improve_accuracy):
+    def start_training_yolo5(params, progress_bar, improve_accuracy, model_name):
         if improve_accuracy:
             if not Functions.save_model_path:
                 print(f"No previous model found.")
@@ -233,15 +234,18 @@ class Functions:
         while t1.is_alive():
             time.sleep(2)
         Functions.save_model_path = yolo.get_custom_model_path()
+        
+        
 
 
     def start_training(setup_window, params, status, improve_accuracy):
         try:
+            model_name = setup_window.ui.load_pages.model_name_option.toPlainText()
             if setup_window.btn_yolo8.isChecked():
-                Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model, improve_accuracy)
+                Functions.start_training_yolo(8, params, setup_window.circular_bar_train_model, improve_accuracy, model_name)
             elif setup_window.btn_yolo5.isChecked():
                 #Functions.start_training_yolo(5,params, setup_window.circular_bar_train_model)
-                Functions.start_training_yolo5(params, setup_window.circular_bar_train_model, improve_accuracy)
+                Functions.start_training_yolo5(params, setup_window.circular_bar_train_model, improve_accuracy, model_name)
             else:
                 print(f"SELECT AT LEAST ONE MODEL.")
                 setup_window.ui.load_pages.label_11.show()
@@ -249,6 +253,7 @@ class Functions:
                 setup_window.ui.load_pages.verticalLayoutWidget_3.hide()              
 
             status[0] = False
+            setup_window.ui.load_pages.label_13.setText(f"Your AI model {model_name} is created and ready to use.")
         except Exception as e:
             status[0] = False
             raise e
@@ -275,10 +280,11 @@ class Functions:
             try:
                 model = YOLO(selected_model_path)
                 os.makedirs(Functions.save_predictions_dir, exist_ok=True)
+                setup_window.ui.load_pages.label_17.setText("Loading model ... ")
                 prediction = model(img_file_path)
                 save_path = os.path.join(Functions.save_predictions_dir, os.path.basename(img_file_path))
                 prediction[0].save(filename=save_path)
-                setup_window.ui.load_pages.label_17.setText("The wegith file is not Yolo ")
+                setup_window.ui.load_pages.label_17.setText("Tested ... ")
 
                 print(f"Prediction results saved to : {Functions.save_predictions_dir}")
             except:

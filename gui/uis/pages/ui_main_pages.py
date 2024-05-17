@@ -256,10 +256,12 @@ class Ui_MainPages(object):
         self.frame_save_model.setEnabled(False)
         self.frame_save_model.setVisible(False)
 
+        load_img_width = self.frame_save_model.frameSize().width() / 2
+        x_pos_load_img = load_img_width / 2
 
         self.label_13 = QLabel(self.frame_save_model)
         self.label_13.setObjectName(u"label_13")
-        self.label_13.setGeometry(QRect(60, 0, 400, 41))
+        self.label_13.setGeometry(QRect(x_pos_load_img-100, 80, load_img_width+100, 121))
         #self.verticalLayoutWidget_4 = QWidget(self.frame_save_model)
         #self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
         #self.verticalLayoutWidget_4.setGeometry(QRect(120, 50, 251, 161))
@@ -449,7 +451,7 @@ class Ui_MainPages(object):
         self.groupBox_2.setTitle("")
         self.label_11.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Training started for YOLO</p></body></html>", None))
         self.label_12.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>On 250 images</p></body></html>", None))
-        self.label_13.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Save trainned model and CRIS file</p></body></html>", None))
+        self.label_13.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Your AI model is not created to use yet</p></body></html>", None))
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>Drag and Drop or Select images</p></body></html>", None))
         #self.label_14.setText(QCoreApplication.translate("MainPages", u"<html><head/><body><p>path here.</p></body></html>", None))
         
